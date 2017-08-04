@@ -100,7 +100,7 @@ body, html {
 }
 
 .timingContainer {
-    width: 15vw;
+    width: 17vw;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -121,7 +121,7 @@ body, html {
 
 .timeToArrival {
     padding-top: 1vh;
-    font-size: 4vh;
+    font-size: 4vw;
     display: flex;
     flex-direction: column;
 }
