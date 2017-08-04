@@ -1,0 +1,35 @@
+extends ../../layout.pug
+
+block head
+    link(rel='stylesheet' href='/static/bus/stop.css')
+
+block content
+    div#header
+        img#bus-stop-icon(src='/static/bus/bus-stop.svg')
+        span#bus-stop-details=NYI
+    div#content
+        each service in services
+            div.service-container
+                div(class=service.operatorCssName + ' service-number-container')
+                    div.service-number-inner-container
+                        span.service-number=service.serviceNumber
+                        span.service-variant=service.serviceVariant
+                div.miniEDS
+                    div.edsText
+                        span.towards Towards
+                        br
+                        span.destination Destination
+                div.timingsContainer
+                    for bus in service.timings
+                        div(class='timingContainer bus-load' + bus.load)
+                            div.timeToArrival
+                                if (+new Date(bus.arrivalTime) - +new Date()) < 0
+                                    span Arr
+                                else
+                                    span=bus.prettyTimeToArrival[0]
+                                    span=bus.prettyTimeToArrival[1]
+                            div.wabStatus
+                                if bus.isWAB
+                                    img(src='/static/bus/wheelchair-bus.svg')
+                                else
+                                    img(src='/static/bus/non-wheelchair-bus.svg')

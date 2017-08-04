@@ -1,0 +1,133 @@
+body, html {
+    background-color: #202129;
+}
+
+#header {
+    background-color: #171717;
+    display: block;
+    height: 20vh;
+    width: 100vw;
+    display: inline-flex;
+    align-items: center;
+}
+
+#bus-stop-icon {
+    width: 12vh;
+    height: 12vh;
+    margin-left: 3vw;
+}
+
+#bus-stop-details {
+    color: #c5c5c5;
+    font-size: 6vh;
+    margin: 0 0 0 3vw;
+}
+
+.sbst {
+    background-color: #b845be
+}
+
+.smrt {
+    background-color: #c63d3d
+}
+
+.tts {
+    background-color: #4ebe45
+}
+
+.gas {
+    background-color: #d7832c
+}
+
+.service-container {
+    height: 25vh;
+    display: flex;
+    background-color: #2a2a2a;
+}
+
+.service-number-container {
+    order: 0;
+    width: 20vw;
+    height: 25vh;
+    display: inline-flex;
+    align-items: center;
+}
+
+.service-number-inner-container {
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.service-number, .service-variant {
+    text-align: center;
+    font-size: 10vw;
+    width: 20vw;
+    color: #c5c5c5;
+}
+
+.service-variant {
+    position: relative;
+    font-size: 5vw;
+    top: -3.5vw;
+}
+
+.miniEDS {
+    order: 1;
+    height: 25vh;
+    display: inline-flex;
+    align-items: center;
+}
+
+.edsText {
+    margin-left: 3vw;
+}
+
+.towards {
+    color: #8f8f8f;
+    font-size: 2vh;
+}
+
+.destination {
+    color: #c5c5c5;
+    font-size: 4vh;
+}
+
+.timingsContainer {
+    order: 1;
+    margin-left: auto;
+    display: flex;
+}
+
+.timingContainer {
+    width: 15vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.bus-load1 {
+    background-color: #60bd29;
+}
+
+.bus-load2 {
+    background-color: #d0ae16;
+}
+
+.bus-load3 {
+    background-color: #b23624;
+}
+
+.timeToArrival {
+    padding-top: 1vh;
+    font-size: 4vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.wabStatus > img {
+    width: 4vh;
+    height: 4vh;
+    padding-bottom: 2vh;
+}
