@@ -5,22 +5,22 @@ body, html {
 #header {
     background-color: #171717;
     display: block;
-    height: 20vh;
+    height: calc((100vw + 100vh) * 0.04);
     width: 100vw;
     display: inline-flex;
     align-items: center;
 }
 
 #bus-stop-icon {
-    width: 12vh;
-    height: 12vh;
-    margin-left: 3vw;
+    width: calc((100vw + 100vh) * 0.02);
+    height: calc((100vw + 100vh) * 0.02);
+    margin-left: calc((100vw + 100vh) * 0.01);
 }
 
 #bus-stop-details {
     color: #c5c5c5;
-    font-size: 6vh;
-    margin: 0 0 0 3vw;
+    font-size: calc((100vw + 100vh) * 0.015);
+    margin: 0 0 0 calc((100vw + 100vh) * 0.01);
 }
 
 .sbst {
@@ -40,15 +40,19 @@ body, html {
 }
 
 .service-container {
-    height: 20vh;
+    height: calc((100vw + 100vh) * 0.07); /* */
     display: flex;
     background-color: #2a2a2a;
+}
+
+.service-container:nth-child(even) {
+    background-color: #202020;
 }
 
 .service-number-container {
     order: 0;
     width: calc((100vw + 100vh) * .05);
-    height: 20vh;
+    height: calc((100vw + 100vh) * 0.07); /* */
     display: inline-flex;
     align-items: center;
 }
@@ -74,23 +78,25 @@ body, html {
 
 .miniEDS {
     order: 1;
-    height: 20vh;
+    height: calc((100vw + 100vh) * 0.07); /* */
     display: inline-flex;
     align-items: center;
 }
 
 .edsText {
-    margin-left: 3vw;
+    margin-left: calc((100vw + 100vh) * 0.01);
 }
 
 .towards {
     color: #8f8f8f;
-    font-size: 2vh;
+    font-size: calc((100vw + 100vh) * 0.007);
 }
 
 .destination {
     color: #c5c5c5;
-    font-size: 4vh;
+    font-size: calc((100vw + 100vh) * 0.02);
+    top: calc(((100vw + 100vh) * 0.004) * -1);
+    position: relative;
 }
 
 .timingsContainer {
@@ -127,7 +133,7 @@ body, html {
 }
 
 .wabStatus > img {
-    width: 3vh;
-    height: 3vh;
+    width: calc((100vw + 100vh) * 0.01);
+    height: calc((100vw + 100vh) * 0.01);
     padding-bottom: 2vh;
 }

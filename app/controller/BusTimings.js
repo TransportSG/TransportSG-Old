@@ -18,14 +18,7 @@ exports.index = (req, res) => {
 					serviceNumber: service.serviceNumber,
 					serviceVariant: service.serviceVariant,
 					operatorCssName: cssMap[service.operator],
-					timings: service.buses.map(bus => {
-						var diff = new Date(new Date(bus.arrivalTime) - new Date());
-						bus.timeToArrival = {
-							minutes: diff.getUTCMinutes(),
-							seconds: diff.getUTCSeconds()
-						}
-						return bus;
-					})
+					timings: service.buses
 				};
 			})
 		}
