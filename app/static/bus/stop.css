@@ -78,13 +78,16 @@ body, html {
 
 .miniEDS {
     order: 1;
-    height: calc((100vw + 100vh) * 0.07); /* */
+    height: calc((100vw + 100vh) * 0.07);
     display: inline-flex;
-    align-items: center;
+    justify-content: center;
 }
 
 .edsText {
     margin-left: calc((100vw + 100vh) * 0.01);
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .towards {
@@ -95,8 +98,7 @@ body, html {
 .destination {
     color: #c5c5c5;
     font-size: calc((100vw + 100vh) * 0.02);
-    top: calc(((100vw + 100vh) * 0.004) * -1);
-    position: relative;
+    margin-top: calc(((100vw + 100vh) * 0.004) * -1);
 }
 
 .timingsContainer {
@@ -117,12 +119,24 @@ body, html {
     background-color: #60bd29;
 }
 
+.service-container:nth-child(even) .bus-load1 {
+    background-color: #58ad25;
+}
+
 .bus-load2 {
     background-color: #d0ae16;
 }
 
+.service-container:nth-child(even) .bus-load2 {
+    background-color: #be9f14;
+}
+
 .bus-load3 {
     background-color: #b23624;
+}
+
+.service-container:nth-child(even) .bus-load3 {
+    background-color: #a13121;
 }
 
 .timeToArrival {
