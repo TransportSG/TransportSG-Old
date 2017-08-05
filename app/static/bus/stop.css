@@ -40,15 +40,15 @@ body, html {
 }
 
 .service-container {
-    height: 25vh;
+    height: 20vh;
     display: flex;
     background-color: #2a2a2a;
 }
 
 .service-number-container {
     order: 0;
-    width: calc((100vw + 100vh) * .08);
-    height: 25vh;
+    width: calc((100vw + 100vh) * .05);
+    height: 20vh;
     display: inline-flex;
     align-items: center;
 }
@@ -60,9 +60,9 @@ body, html {
 }
 
 .service-number-inner-container span {
-    width: calc((100vw + 100vh) * .08);
+    width: calc((100vw + 100vh) * .05);
     text-align: center;
-    font-size: calc((100vw + 100vh) * .05);
+    font-size: calc((100vw + 100vh) * .03);
     color: #c5c5c5;
 }
 
@@ -74,7 +74,7 @@ body, html {
 
 .miniEDS {
     order: 1;
-    height: 25vh;
+    height: 20vh;
     display: inline-flex;
     align-items: center;
 }
@@ -100,7 +100,7 @@ body, html {
 }
 
 .timingContainer {
-    width: 10vw;
+    width: calc((100vw + 100vh) * .03);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -121,7 +121,7 @@ body, html {
 
 .timeToArrival {
     padding-top: 1vh;
-    font-size: 3vw;
+    font-size: calc((100vw + 100vh) * .01);
     display: flex;
     flex-direction: column;
 }
