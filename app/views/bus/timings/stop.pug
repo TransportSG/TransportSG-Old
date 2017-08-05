@@ -26,8 +26,8 @@ block content
                                 if (+new Date(bus.arrivalTime) - +new Date()) < 0
                                     span Arr
                                 else
-                                    span=bus.prettyTimeToArrival[0]
-                                    span=bus.prettyTimeToArrival[1]
+                                    span=bus.timeToArrival.minutes
+                                    span=bus.timeToArrival.seconds
                             div.wabStatus
                                 if bus.isWAB
                                     img(src='/static/bus/wheelchair-bus.svg')

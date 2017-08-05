@@ -47,7 +47,7 @@ body, html {
 
 .service-number-container {
     order: 0;
-    width: 20vw;
+    width: calc((100vw + 100vh) * .08);
     height: 25vh;
     display: inline-flex;
     align-items: center;
@@ -59,10 +59,10 @@ body, html {
     flex-direction: column;
 }
 
-.service-number, .service-variant {
+.service-number-inner-container span {
+    width: calc((100vw + 100vh) * .08);
     text-align: center;
-    font-size: 10vw;
-    width: 20vw;
+    font-size: calc((100vw + 100vh) * .05);
     color: #c5c5c5;
 }
 
@@ -100,7 +100,7 @@ body, html {
 }
 
 .timingContainer {
-    width: 17vw;
+    width: 10vw;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -121,13 +121,13 @@ body, html {
 
 .timeToArrival {
     padding-top: 1vh;
-    font-size: 4vw;
+    font-size: 3vw;
     display: flex;
     flex-direction: column;
 }
 
 .wabStatus > img {
-    width: 4vh;
-    height: 4vh;
+    width: 3vh;
+    height: 3vh;
     padding-bottom: 2vh;
 }

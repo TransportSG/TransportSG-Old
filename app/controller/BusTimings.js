@@ -19,7 +19,11 @@ exports.index = (req, res) => {
 					serviceVariant: service.serviceVariant,
 					operatorCssName: cssMap[service.operator],
 					timings: service.buses.map(bus => {
-						bus.prettyTimeToArrival = bus.prettyTimeToArrival.replace('utes and ', '').replace('onds', '').replace(/ /g, '').match(/(\d+)[a-z]{3}/g);
+						var diff = new Date(new Date(bus.arrivalTime) - new Date());
+						bus.timeToArrival = {
+							minutes: diff.getUTCMinutes(),
+							seconds: diff.getUTCSeconds()
+						}
 						return bus;
 					})
 				};
