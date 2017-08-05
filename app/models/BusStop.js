@@ -3,10 +3,12 @@ const mongoose = require('mongoose'),
 
 var BusStop = new Schema({
     busStopCode: Number,
-    name: String,
+    busStopName: String,
     position: {
         latitude: Number,
         longitude: Number
     },
     roadName: String
 });
+
+module.exports = mongoose.model('BusStop', BusStop);
