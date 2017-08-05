@@ -61,6 +61,8 @@ body, html {
     display: inline-flex;
     align-items: center;
     flex-direction: column;
+    top: calc((1vw + 1vh) * -.2);
+    position: relative;
 }
 
 .service-number-inner-container span {
@@ -72,12 +74,10 @@ body, html {
 
 .service-number {
     font-size: calc((100vw + 100vh) * .03);
-    top: calc((1vw + 1vh) * .2);
 }
 
 .service-variant {
     font-size: calc((100vw + 100vh) * .02);
-    top: calc((1vw + 1vh) * -1);
 }
 
 .miniEDS {
