@@ -9,7 +9,6 @@ body, html {
 }
 
 #bus-stop-details {
-    color: #c5c5c5;
     font-size: calc((100vw + 100vh) * 0.015);
     margin: 0 0 0 calc((100vw + 100vh) * 0.01);
 }
@@ -76,7 +75,6 @@ background-color: #9d3ba2;
     position: relative;
     width: calc((100vw + 100vh) * .05);
     text-align: center;
-    color: #c5c5c5;
 }
 
 .service-number {
@@ -107,7 +105,6 @@ background-color: #9d3ba2;
 }
 
 .destination {
-    color: #c5c5c5;
     font-size: calc((100vw + 100vh) * 0.017);
     margin-top: calc(((100vw + 100vh) * 0.004) * -1);
 }
@@ -155,6 +152,7 @@ background-color: #9d3ba2;
     font-size: calc((100vw + 100vh) * .01);
     display: flex;
     flex-direction: column;
+    color: #101010;
 }
 
 .wabStatus > img {
