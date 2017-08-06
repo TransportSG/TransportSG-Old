@@ -8,12 +8,14 @@
     height: calc(100vh - (100vw + 100vh) * 0.04);
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 #ohno {
     order: 1;
     display: inline-flex;
     align-items: center;
+    width: 90vw;
 }
 
 #links {
