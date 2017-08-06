@@ -8,7 +8,8 @@ var BusStop = new Schema({
         latitude: Number,
         longitude: Number
     },
-    roadName: String
+    roadName: String,
+    busServices: [String]
 });
 
 module.exports = mongoose.model('BusStop', BusStop);
