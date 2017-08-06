@@ -11,12 +11,24 @@ var cssMap = {
 	'Go-Ahead Singapore': 'gas'
 }
 
+function isValidBusStopCode(busStopCode) {
+	return !!busStopCode.match(/^\d{5}$/);
+}
+
 exports.index = (req, res) => {
 	var busStopCode = req.params.busStopCode;
-	busTimingsAPI.getBusTimingsForStop(busStopCode, (err, timings) => {
-		BusStop.findOne({
-			busStopCode: busStopCode
-		}, (err, busStop) => {
+	if (!isValidBusStopCode) {
+		res.render('bus/timings/invalid-bus-stop-code');
+		return;
+	}
+	BusStop.findOne({
+		busStopCode: busStopCode
+	}, (err, busStop) => {
+		if (!busStop) {
+			res.render('bus/timings/invalid-bus-stop-code');
+			return;
+		}
+		busTimingsAPI.getBusTimingsForStop(busStopCode, (err, timings) => {
 			util.asyncMap(timings.service, service => BusStop.findOne({
 				busStopCode: service.buses[0].serviceData.end
 			}).exec(),
@@ -31,8 +43,8 @@ exports.index = (req, res) => {
 			}, services => {
 				res.render('bus/timings/stop', {
 					timings: {services},
-					busStopCode: busStopCode,
-					busStop
+					busStopCode: Array(5).fill(0).concat((busStopCode).toString().split('')).slice(-5).join(''),
+					busStopName: busStop.busStopName
 				});
 			});
 		});
