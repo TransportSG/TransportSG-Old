@@ -1,8 +1,14 @@
 extends ../../layout
 
 block head
+    link(rel='stylesheet' href='/static/bus/timings/invalid-bus-stop-code.css')
 
 block header
-    span Whoops!
+    span#whoops-header Whoops!
 block content
-        span hi
+    div#ohno
+        img#missing-bus-stop(src='/static/bus/timings/missing-bus-stop.svg')
+        span#text You seem to be finding a missing bus stop!
+    div#links
+        a(href='/').link Go Home
+        a(href='/bus/stops/nearby').link Nearby Bus Stops
