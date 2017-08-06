@@ -24,11 +24,21 @@ function connect() {
 }
 
 function getServiceNumber(service) {
-    return service.replace(/[A-Za-z#]/g, '');
+    if (service.startsWith('NR') || service.endsWith('N')) {
+        return service.replace(/[0-9]/g, '');
+    } else if (service.statsWith('CT')) {
+        return 'CT';
+    } else
+        return service.replace(/[A-Za-z#]/g, '');
 }
 
 function getServiceVariant(service) {
-    return service.replace(/[0-9]/g, '');
+    if (service.startsWith('NR') || service.endsWith('N')) {
+        return service.replace(/[A-Za-z#]/g, '');
+    } else if (service.startsWith('CT')) {
+        return service.replace(/CT/, '');
+    } else
+    return service.replace(/[0-9]/g, '').replace(/#/, 'C');
 }
 
 var remaining = 0;
@@ -131,7 +141,7 @@ function loadBusServiceData(serviceNo) {
                 var stopsList = Array.from(document.querySelectorAll('.eguide-table tbody')).slice(2);
                 return stopsList.map(stopsList => {
                     var stops = Array.from(stopsList.querySelectorAll('tr'));
-                    return stops.filter(stop => !!stop.querySelector('td:nth-child(2) input')).map(busStop => {
+                    return stops.slice(3).filter(stop => !stop.querySelector('.subhead2')).slice(1, -1).map(busStop => {
                         var nodes = busStop.children;
                         return {
                             distance: nodes[0].textContent * 1,
