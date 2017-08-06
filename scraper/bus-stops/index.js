@@ -1,6 +1,7 @@
 const request = require('request'),
     {JSDOM} = require('jsdom'),
     BusStop = require('../../app/models/BusStop'),
+    BusService = require('../../app/models/BusService');
     mongoose = require('mongoose'),
     LTADataMall = require('ltadatamall'),
     {BusStopsAPI, APIKey} = LTADataMall;
@@ -30,20 +31,35 @@ busStopAPI.getAllBusStops((err, busStops) => {
         if (busStop.busStopCode.startsWith('N')) {
             return;
         }
-        remaining++;
-        var busStopModel = new BusStop(busStop);
-        var query = {busStopCode: busStop.busStopCode*1};
-        BusStop.findOne(query, (err, foundBusStop) => {
-            if (!foundBusStop)
-                busStopModel.save(err => {
-                    if (err) console.log(err);
-                    remaining--;
-                });
-            else
-                BusStop.findOneAndUpdate(query, busStop, err => {
-                    if (err) console.log(err);
-                    remaining--;
-                });
+        BusService.find({
+            stops: {
+                $elemMatch: {
+                    $elemMatch: {
+                        busStopCode: busStop.busStopCode
+                    }
+                }
+            }
+        }, (err, services) => {
+            if (services === null) {services = []; console.log(busStop.busStopCode);}
+            services = services.map(service => service.serviceNumber + service.variant);
+            console.log(`${busStop.busStopCode}: ${services}`);
+            remaining++;
+            var busStopModel = new BusStop(Object.assign(busStop, {
+                busServices: services
+            }));
+            var query = {busStopCode: busStop.busStopCode};
+            BusStop.findOne(query, (err, foundBusStop) => {
+                if (!foundBusStop)
+                    busStopModel.save(err => {
+                        if (err) console.log(err);
+                        remaining--;
+                    });
+                else
+                    BusStop.findOneAndUpdate(query, busStop, err => {
+                        if (err) console.log(err);
+                        remaining--;
+                    });
+            });
         });
     });
 });
@@ -56,6 +72,6 @@ setTimeout(() => {
             process.exit(0);
         }
     }, 10000);
-}, 15000);
+}, 60000);
 
 connect();

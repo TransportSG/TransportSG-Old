@@ -26,7 +26,7 @@ function connect() {
 function getServiceNumber(service) {
     if (service.startsWith('NR') || service.endsWith('N')) {
         return service.replace(/[0-9]/g, '');
-    } else if (service.statsWith('CT')) {
+    } else if (service.startsWith('CT')) {
         return 'CT';
     } else
         return service.replace(/[A-Za-z#]/g, '');
