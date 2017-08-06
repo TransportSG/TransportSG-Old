@@ -1,0 +1,8 @@
+block head
+    title='Bus Timings for ' + busStopName
+
+block content
+    div#header
+        img#bus-stop-icon(src='/static/bus/bus-stop.svg')
+        span#bus-stop-details=busStopCode + ' ' + busStopName
+    div#content

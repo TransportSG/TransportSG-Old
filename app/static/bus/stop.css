@@ -2,15 +2,6 @@ body, html {
     background-color: #1e1e1e;
 }
 
-#header {
-    background-color: #171717;
-    display: block;
-    height: calc((100vw + 100vh) * 0.04);
-    width: 100vw;
-    display: inline-flex;
-    align-items: center;
-}
-
 #bus-stop-icon {
     width: calc((100vw + 100vh) * 0.02);
     height: calc((100vw + 100vh) * 0.02);

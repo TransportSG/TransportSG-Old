@@ -1,37 +1,33 @@
 extends ../../layout.pug
 
 block head
-    link(rel='stylesheet' href='/static/bus/stop.css')
-    link(rel='shortcut icon' href='/static/favicon.png')
-    link(rel='apple-touch-icon' href='/static/favicon.png')
-    title='Bus Timings for ' + busStop.busStopName
+    title='Bus Timings for ' + busStopName
 
+block header
+    img#bus-stop-icon(src='/static/bus/bus-stop.svg')
+    span#bus-stop-details=busStopCode + ' ' + busStopName
 block content
-    div#header
-        img#bus-stop-icon(src='/static/bus/bus-stop.svg')
-        span#bus-stop-details=busStop.busStopCode + ' ' + busStop.busStopName
-    div#content
-        each service in timings.services
-            div.service-container
-                div(class=service.operatorCssName + ' service-number-container')
-                    div.service-number-inner-container
-                        span.service-number=service.serviceNumber
-                        span.service-variant=service.serviceVariant
-                div.miniEDS
-                    div.edsText
-                        span.towards Towards
-                        span.destination=service.routeDestination
-                div.timingsContainer
-                    for bus in service.timings
-                        div(class='timingContainer bus-load' + bus.load)
-                            div.timeToArrival
-                                if (+new Date(bus.arrivalTime) - +new Date()) < 0
-                                    span Arr
-                                else
-                                    span=bus.timeToArrival.minutes
-                                    span=bus.timeToArrival.seconds
-                            div.wabStatus
-                                if bus.isWAB
-                                    img(src='/static/bus/wheelchair-bus.svg')
-                                else
-                                    img(src='/static/bus/non-wheelchair-bus.svg')
+    each service in timings.services
+        div.service-container
+            div(class=service.operatorCssName + ' service-number-container')
+                div.service-number-inner-container
+                    span.service-number=service.serviceNumber
+                    span.service-variant=service.serviceVariant
+            div.miniEDS
+                div.edsText
+                    span.towards Towards
+                    span.destination=service.routeDestination
+            div.timingsContainer
+                for bus in service.timings
+                    div(class='timingContainer bus-load' + bus.load)
+                        div.timeToArrival
+                            if (+new Date(bus.arrivalTime) - +new Date()) < 0
+                                span Arr
+                            else
+                                span=bus.timeToArrival.minutes
+                                span=bus.timeToArrival.seconds
+                        div.wabStatus
+                            if bus.isWAB
+                                img(src='/static/bus/wheelchair-bus.svg')
+                            else
+                                img(src='/static/bus/non-wheelchair-bus.svg')
