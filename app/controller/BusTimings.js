@@ -36,7 +36,7 @@ function createOffset(timings, ageMillis) {
 function getTerminalForService(busService, givenDestination) {
 	return new Promise(function(resolve, reject) {
 		BusService.findOne({
-			fullService: busService
+			fullService: busService.replace(/[WG]/g, '')
 		}, (err, service) => {
 			if (err) throw err;
 			var stops = service.stops;
