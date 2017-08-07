@@ -14,5 +14,8 @@
     "ltadatamall": "^1.1.4",
     "mongoose": "^4.11.5",
     "pug": "^2.0.0-rc.1"
+  },
+  "devDependencies": {
+    "jasmine": "^2.7.0"
   }
 }
