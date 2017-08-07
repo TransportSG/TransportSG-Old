@@ -4,7 +4,7 @@ const {BusTimingsAPI} = require('ltadatamall'),
 	CachedMap = require('../CachedMap');
 
 const busTimingsAPI = new BusTimingsAPI(global.apiKey),
-	busTimingsCache = new CachedMap(10 * 1000);
+	busTimingsCache = new CachedMap(30 * 1000);
 
 var cssMap = {
 	'SBS Transit': 'sbst',
