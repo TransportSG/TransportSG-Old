@@ -1,5 +1,6 @@
 const {BusTimingsAPI} = require('ltadatamall'),
 	BusStop = require('../models/BusStop'),
+	BusService = require('../models/BusService'),
 	util = require('../util'),
 	CachedMap = require('../CachedMap');
 
@@ -32,26 +33,46 @@ function createOffset(timings, ageMillis) {
 	return timings;
 }
 
-function respondTimings(res, timings, busStop) {
-	var busStopCode = busStop.busStopCode;
-	util.asyncMap(timings.service, service => BusStop.findOne({
-		busStopCode: service.buses[0].serviceData.end
-	}).exec(),
-	(busStop, service) => {
-		return {
-			serviceNumber: service.serviceNumber,
-			serviceVariant: service.serviceVariant,
-			operatorCssName: cssMap[service.operator],
-			routeDestination: busStop.busStopName,
-			timings: service.buses
-		};
-	}, services => {
-		res.render('bus/timings/stop', {
-			timings: {services},
-			busStopCode: Array(5).fill(0).concat((busStopCode).toString().split('')).slice(-5).join(''),
-			busStopName: busStop.busStopName
+function getTerminalForService(busService, givenDestination) {
+	return new Promise(function(resolve, reject) {
+		BusService.findOne({
+			fullService: busService
+		}, (err, service) => {
+			if (err) throw err;
+			var stops = service.stops;
+			stops.forEach((direction, i) => {
+				direction.forEach(busStop => {
+					if (busStop.busStopCode == givenDestination) {
+						var serviceDirection = i - 1;
+						var endingBusStop = direction[direction.length - 1];
+						resolve(endingBusStop);
+					}
+				});
+			});
 		});
 	});
+}
+
+function respondTimings(res, timings, busStop) {
+	var busStopCode = busStop.busStopCode;
+	util.asyncMap(timings.service,
+		service => getTerminalForService(service.serviceNumber + service.serviceVariant, service.buses[0].serviceData.end),
+		(busStop, service) => {
+			return {
+				serviceNumber: service.serviceNumber,
+				serviceVariant: service.serviceVariant,
+				operatorCssName: cssMap[service.operator],
+				routeDestination: busStop.busStopName,
+				timings: service.buses
+			};
+		}, services => {
+			res.render('bus/timings/stop', {
+				timings: {services},
+				busStopCode: Array(5).fill(0).concat((busStopCode).toString().split('')).slice(-5).join(''),
+				busStopName: busStop.busStopName
+			});
+		}
+	);
 }
 
 exports.index = (req, res) => {
