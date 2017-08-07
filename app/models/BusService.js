@@ -4,6 +4,7 @@ const mongoose = require('mongoose'),
 var BusService = new Schema({
     serviceNumber: String,
     variant: String,
+    fullService: String,
     routeType: String,
     operator: String,
     interchanges: [],
@@ -37,7 +38,7 @@ var BusService = new Schema({
             {
                 distance: Number,
                 busStopCode: Number,
-                name: String
+                busStopName: String
             }
         ]
     ]

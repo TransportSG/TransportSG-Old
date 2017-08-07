@@ -53,6 +53,7 @@ function loadBusServiceData(serviceNo) {
         var contents = {
             serviceNumber: getServiceNumber(serviceNo),
             variant: getServiceVariant(serviceNo),
+            fullService: serviceNo,
             routeType: (() => {
                 var parent = document.querySelector('#Content-eservice > article tbody > tr:nth-child(1) > td:nth-child(1)').childNodes;
                 if (parent.length == 3) return parent[0].textContent;
@@ -146,7 +147,7 @@ function loadBusServiceData(serviceNo) {
                         return {
                             distance: nodes[0].textContent * 1,
                             busStopCode: nodes[1].textContent * 1,
-                            name: nodes[2].textContent.slice(3)
+                            busStopName: nodes[2].textContent.slice(3)
                         };
                     });
                 });
