@@ -16,7 +16,7 @@ function connect() {
 			socketOptions: {
 				keepAlive: 1
 			},
-			reconnectTries: 5
+			reconnectTries: Infinity
 		}
 	}, err => {
 		if (err) throw err;
