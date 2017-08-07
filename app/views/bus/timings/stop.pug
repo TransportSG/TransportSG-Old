@@ -3,10 +3,12 @@ extends ../../layout.pug
 block head
     title='Bus Timings for ' + busStopName
 
+block css
+    link(rel='stylesheet' href='/static/bus/timings/stop.css')
+
 block header
     img#bus-stop-icon(src='/static/bus/timings/bus-stop.svg')
     span#bus-stop-details=busStopCode + ' ' + busStopName
-    link(rel='stylesheet' href='/static/bus/timings/stop.css')
 block content
     each service in timings.services
         div.service-container

@@ -1,10 +1,12 @@
 html
     head
         meta(name='viewport' content='initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
-        script(src='/static/helper.js')
         link(rel='stylesheet' href='/static/style.css')
         link(rel='shortcut icon' href='/static/favicon.png')
         link(rel='apple-touch-icon' href='/static/favicon.png')
+        block css
+        script(src='/static/helper.js')
+        block scripts
         block head
     body
         div#header
