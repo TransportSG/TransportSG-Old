@@ -16,7 +16,7 @@ function connect() {
 			socketOptions: {
 				keepAlive: 1
 			},
-			reconnectTries: 5
+			reconnectTries: Infinity
 		}
 	}, err => {
 		if (err) throw err;
@@ -40,9 +40,7 @@ busStopAPI.getAllBusStops((err, busStops) => {
                 }
             }
         }, (err, services) => {
-            if (services === null) {services = []; console.log(busStop.busStopCode);}
             services = services.map(service => service.serviceNumber + service.variant);
-            console.log(`${busStop.busStopCode}: ${services}`);
             remaining++;
             var busStopModel = new BusStop(Object.assign(busStop, {
                 busServices: services

@@ -24,7 +24,7 @@ function connect() {
 }
 
 function getServiceNumber(service) {
-    if (service.startsWith('NR') || service.endsWith('N')) {
+    if (service.startsWith('NR')) {
         return service.replace(/[0-9]/g, '');
     } else if (service.startsWith('CT')) {
         return 'CT';
@@ -33,7 +33,7 @@ function getServiceNumber(service) {
 }
 
 function getServiceVariant(service) {
-    if (service.startsWith('NR') || service.endsWith('N')) {
+    if (service.startsWith('NR')) {
         return service.replace(/[A-Za-z#]/g, '');
     } else if (service.startsWith('CT')) {
         return service.replace(/CT/, '');
