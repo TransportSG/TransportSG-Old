@@ -27,8 +27,10 @@ var load = () => {
                 long: position.coords.longitude
             }
         }, response => {
-            $.delete('#loadingContainer');
-            $.delete('#interactionContainer');
+            if ($('#loadingContainer'))
+                $.delete('#loadingContainer');
+            if ($('#interactionContainer'))
+                $.delete('#interactionContainer');
             $('#resultContainer').innerHTML = response;
         });
     }, function error(error) {
