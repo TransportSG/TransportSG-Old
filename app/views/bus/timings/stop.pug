@@ -19,7 +19,7 @@ block content
             div.miniEDS
                 div.edsText
                     span.towards Towards
-                    span.destination=service.routeDestination
+                    a(href='/timings/' + service.routeDestination.busStopCode).destination=service.routeDestination.busStopName
             div.timingsContainer
                 for bus in service.timings
                     div(class='timingContainer bus-load' + bus.load)

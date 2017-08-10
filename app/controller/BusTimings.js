@@ -74,7 +74,7 @@ function respondTimings(res, timings, busStop) {
 				serviceNumber: service.serviceNumber,
 				serviceVariant: service.serviceVariant,
 				operatorCssName: cssMap[service.operator],
-				routeDestination: busStop.busStopName,
+				routeDestination: busStop,
 				timings: filterFakeNWAB(service.buses, service.operator)
 			};
 		}, services => {
