@@ -1,5 +1,5 @@
 const BusStops = require('../models/BusStop'),
-    BusServices = require('../models/BusServices');
+    BusServices = require('../models/BusService');
 
 exports.index = (req, res) => {
     res.render('bus/stops/nearby');
