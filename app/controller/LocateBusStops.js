@@ -1,6 +1,13 @@
 const BusStops = require('../models/BusStop'),
     BusServices = require('../models/BusService');
 
+var cssMap = {
+	'SBS Transit': 'sbst',
+	'SMRT Buses': 'smrt',
+	'Tower Transit Singapore': 'tts',
+	'Go-Ahead Singapore': 'gas'
+}
+
 exports.index = (req, res) => {
     res.render('bus/stops/nearby');
 }
@@ -42,12 +49,14 @@ exports.findByLatLong = (req, res) => {
                 busStopCode: busStop.busStopCode,
                 roadName: busStop.roadName,
                 busStopName: busStop.busStopName,
-                busServices: busStop.busServices,
+                busServices: busStop.busServices.map(service => {
+                    service.operatorCss = cssMap[service.operator];
+                    return service;
+                }),
                 distance: distance(busStop.position.latitude, busStop.position.longitude, req.body.lat, req.body.long)
             };
         }).sort((a, b) => a.distance - b.distance);
 
-        console.log(busStops);
         res.render('bus/stops/nearby-load', {
             busStops: busStops
         });

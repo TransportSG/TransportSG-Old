@@ -7,3 +7,11 @@ div#busStops
                 a(href='/timings/' + busStop.busStopCode).busStopLink
                     span.busStopRoad=busStop.roadName
                     span.busStopName=busStop.busStopCode + ' ' + busStop.busStopName
+            div.servicePeek
+                div.services
+                    div.col
+                        each service in (busStop.busServices.slice(5, 10))
+                            span(class='busService ' + service.operatorCss)=service.serviceNumber
+                    div.col
+                        each service in (busStop.busServices.slice(0, 5))
+                            span(class='busService ' + service.operatorCss)=service.serviceNumber

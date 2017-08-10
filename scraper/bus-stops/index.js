@@ -40,11 +40,13 @@ busStopAPI.getAllBusStops((err, busStops) => {
                 }
             }
         }, (err, services) => {
+            if (err) console.log(err);
+            services = services || [];
             services = services.map(service => {
                 return {
                     serviceNumber: service.serviceNumber + service.variant,
                     operator: service.operator
-                }
+                };
             });
 
             remaining++;

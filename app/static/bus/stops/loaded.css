@@ -47,3 +47,42 @@
     font-size: calc((100vw + 100vh) * 0.01);
     color: #8f8f8f;
 }
+
+.servicePeek {
+    margin-left: auto;
+}
+
+.services {
+    height: calc((100vw + 100vh) * 0.07);
+    display: inline-flex;
+}
+
+.col {
+    display: inline-flex;
+    height: calc((100vw + 100vh) * 0.07);
+    flex-direction: column;
+    align-items: center;
+    width: calc((100vw + 100vh) * 0.02)
+}
+
+.busService {
+    font-size: calc((100vw + 100vh) * 0.01);
+    width: calc((100vw + 100vh) * 0.02);
+    text-align: center;
+}
+
+.sbst {
+    background-color: #b845be;
+}
+
+.smrt {
+    background-color: #c63d3d;
+}
+
+.tts {
+    background-color: #4ebe45;
+}
+
+.gas {
+    background-color: #d7832c;
+}

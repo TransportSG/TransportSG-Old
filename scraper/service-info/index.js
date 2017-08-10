@@ -41,6 +41,13 @@ function getServiceVariant(service) {
     return service.replace(/[0-9]/g, '').replace(/#/, 'C');
 }
 
+var operatorMap = {
+    'Tower Transit': 'Tower Transit Singapore',
+    'Go-Ahead Singapore': 'Go-Ahead Singapore',
+    'SMRT Buses': 'SMRT Buses',
+    'SBS Transit': 'SBS Transit'
+}
+
 var remaining = 0;
 
 function loadBusServiceData(serviceNo) {
@@ -59,7 +66,7 @@ function loadBusServiceData(serviceNo) {
                 if (parent.length == 3) return parent[0].textContent;
                 else return 'Trunk';
             })(),
-            operator: document.querySelector('td.company').textContent,
+            operator: operatorMap[document.querySelector('td.company').textContent],
             interchanges: (() => {
                 var firstInterchange = document.querySelector(
                     '#Content-eservice > article > section > table:nth-child(1) > tbody > tr:nth-child(3) > td:nth-child(1)');
