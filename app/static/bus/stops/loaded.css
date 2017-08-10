@@ -21,7 +21,30 @@
     align-items: center;
     justify-content: center;
     font-size: calc((100vw + 100vh) * .03);
+}
+
+.nearby {
     background-color: #4ebe45;
+}
+
+.busStopContainer:nth-child(even) .nearby {
+    background-color: #43a93b;
+}
+
+.close {
+    background-color: #d7832c;
+}
+
+.busStopContainer:nth-child(even) .close {
+    background-color: #c47625;
+}
+
+.far {
+    background-color: #c63d3d;
+}
+
+.busStopContainer:nth-child(even) .far {
+    background-color: #b43535;
 }
 
 .busStopLink {
@@ -70,8 +93,6 @@
     width: calc((100vw + 100vh) * 0.03);
     text-align: center;
     height: calc((100vw + 100vh) * 0.07 / 5);
-    padding-left: calc((100vw + 100vh) * 0.001);
-    padding-right: calc((100vw + 100vh) * 0.001);
 }
 
 .col:nth-child(odd) .sbst:nth-child(odd)  {

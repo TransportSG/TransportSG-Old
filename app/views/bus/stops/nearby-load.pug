@@ -1,7 +1,7 @@
 div#busStops
     each busStop in busStops
         div.busStopContainer
-            div.distanceMeter
+            div(class='distanceMeter ' + getDistanceCssClass(busStop.distance))
                 span.distance=(busStop.distance * 1000).toPrecision(3)
             div.routeInfo
                 a(href='/timings/' + busStop.busStopCode).busStopLink

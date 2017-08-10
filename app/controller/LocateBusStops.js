@@ -51,14 +51,19 @@ exports.findByLatLong = (req, res) => {
                 busStopName: busStop.busStopName,
                 busServices: busStop.busServices.map(service => {
                     service.operatorCss = cssMap[service.operator];
+                    service.svc = service.serviceNumber.match(/(\d+)/)[0] * 1;
                     return service;
-                }),
+                }).sort((a, b) => a.svc - b.svc),
                 distance: distance(busStop.position.latitude, busStop.position.longitude, req.body.lat, req.body.long)
             };
         }).sort((a, b) => a.distance - b.distance);
-
         res.render('bus/stops/nearby-load', {
-            busStops: busStops
+            busStops: busStops,
+            getDistanceCssClass: distance => {
+                if (distance >= 0 && distance < 0.3) return 'nearby';
+                if (distance >= 0.3 && distance < 0.6) return 'close';
+                else return 'far';
+            }
         });
     });
 }
