@@ -29,6 +29,8 @@ block content
                             else
                                 span=bus.timeToArrival.minutes
                                 span=bus.timeToArrival.seconds
+                        div.busType
+                            span.busType=bus.type
                         div.wabStatus
                             if bus.isWAB
                                 img(src='/static/bus/timings/wheelchair-bus.svg')
