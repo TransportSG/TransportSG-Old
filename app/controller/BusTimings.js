@@ -36,16 +36,21 @@ function createOffset(timings, ageMillis) {
 function getTerminalForService(busService, givenDestination) {
 	return new Promise(function(resolve, reject) {
 		BusService.findOne({
-			fullService: busService.replace(/[A-Z]/g, '')
+			fullService: busService.replace(/[ABWG]/g, '')
 		}, (err, service) => {
 			if (err) throw err;
 			var stops = service.stops;
+			var done = false;
 			stops.forEach((direction, i) => {
+				if (done) return;
 				direction.forEach(busStop => {
+					if (done) return;
 					if (busStop.busStopCode == givenDestination) {
 						var serviceDirection = i - 1;
 						var endingBusStop = direction[direction.length - 1];
 						resolve(endingBusStop);
+						done = true;
+						return;
 					}
 				});
 			});
