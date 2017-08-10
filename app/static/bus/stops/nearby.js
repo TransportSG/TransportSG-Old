@@ -7,6 +7,7 @@ var id = setInterval(() => {
 
 function showError(message) {
     $('div#message span').textContent = message;
+    $('#interactionContainer').style.display = 'block';
     $.delete('#loadingContainer');
 }
 

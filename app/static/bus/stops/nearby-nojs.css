@@ -1,3 +1,7 @@
 #loadingContainer, #resultContainer {
     display: none;
 }
+
+#interactionContainer {
+    display: block;
+}
