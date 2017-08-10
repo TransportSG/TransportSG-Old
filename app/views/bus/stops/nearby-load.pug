@@ -1,0 +1,9 @@
+div#busStops
+    each busStop in busStops
+        div.busStopContainer
+            div.distanceMeter
+                span.distance=(busStop.distance * 1000).toPrecision(3)
+            div.routeInfo
+                a(href='/timings/' + busStop.busStopCode).busStopLink
+                    span.busStopRoad=busStop.roadName
+                    span.busStopName=busStop.busStopCode + ' ' + busStop.busStopName

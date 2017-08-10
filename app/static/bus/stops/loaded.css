@@ -1,0 +1,49 @@
+#busStops {
+    width: 100vh;
+    height: calc(100vh - (100vw + 100vh) * 0.04);
+}
+
+.busStopContainer {
+    display: flex;
+    height: calc((100vw + 100vh) * 0.07);
+    background-color: #2a2a2a;
+}
+
+.busStopContainer:nth-child(even) {
+    background-color: #202020;
+}
+
+.distanceMeter {
+    order: 0;
+    width: calc((100vw + 100vh) * .05);
+    height: calc((100vw + 100vh) * 0.07);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: calc((100vw + 100vh) * .03);
+    background-color: #4ebe45;
+}
+
+.busStopLink {
+    text-decoration: none;
+    color: #c5c5c5;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.routeInfo {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: calc((100vw + 100vh) * 0.01);
+}
+
+.busStopName {
+    font-size: calc((100vw + 100vh) * 0.02);
+}
+
+.busStopRoad {
+    font-size: calc((100vw + 100vh) * 0.01);
+    color: #8f8f8f;
+}

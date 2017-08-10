@@ -1,0 +1,28 @@
+extends ../../layout
+
+block head
+    title Locate Nearby Bus Stops
+
+block css
+    link(rel='stylesheet' href='/static/bus/stops/nearby.css')
+    link(rel='stylesheet' href='/static/bus/stops/loaded.css')
+    noscript
+        link(rel='stylesheet' href='/static/bus/stops/nearby-nojs.css')
+
+block scripts
+    script(src='/static/bus/stops/nearby.js')
+
+block header
+    span#title Locate Nearby Bus Stops
+
+block content
+    div#loadingContainer
+        div
+            span.findingBusStops Finding Bus Stops
+        div.spacer
+        div
+            div#spinner
+    div#interactionContainer
+        div#message
+            span Your browser does not support JavaScript!
+    div#resultContainer

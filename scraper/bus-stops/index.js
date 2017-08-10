@@ -40,7 +40,13 @@ busStopAPI.getAllBusStops((err, busStops) => {
                 }
             }
         }, (err, services) => {
-            services = services.map(service => service.serviceNumber + service.variant);
+            services = services.map(service => {
+                return {
+                    serviceNumber: service.serviceNumber + service.variant,
+                    operator: service.operator
+                }
+            });
+
             remaining++;
             var busStopModel = new BusStop(Object.assign(busStop, {
                 busServices: services

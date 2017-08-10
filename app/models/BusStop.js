@@ -9,7 +9,10 @@ var BusStop = new Schema({
         longitude: Number
     },
     roadName: String,
-    busServices: [String]
+    busServices: [{
+        serviceNumber: String,
+        operator: String
+    }]
 });
 
 module.exports = mongoose.model('BusStop', BusStop);
