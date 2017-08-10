@@ -53,6 +53,18 @@ function getTerminalForService(busService, givenDestination) {
 	});
 }
 
+function filterFakeNWAB(timings, operator) {
+	return timings.map(bus => {
+		if (bus.type === 'DD' && operator != 'SBS Transit') {
+			bus.isWAB = true;
+		}
+		if (bus.type === 'SD' && operator != 'SBS Transit') {
+			bus.isWAB = true;
+		}
+		return bus;
+	});
+}
+
 function respondTimings(res, timings, busStop) {
 	var busStopCode = busStop.busStopCode;
 	util.asyncMap(timings.service,
@@ -63,7 +75,7 @@ function respondTimings(res, timings, busStop) {
 				serviceVariant: service.serviceVariant,
 				operatorCssName: cssMap[service.operator],
 				routeDestination: busStop.busStopName,
-				timings: service.buses
+				timings: filterFakeNWAB(service.buses, service.operator)
 			};
 		}, services => {
 			res.render('bus/timings/stop', {
