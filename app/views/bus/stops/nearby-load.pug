@@ -2,7 +2,7 @@ div#busStops
     each busStop in busStops
         div.busStopContainer
             div(class='distanceMeter ' + getDistanceCssClass(busStop.distance))
-                span.distance=(busStop.distance * 1000).toPrecision(3)
+                span.distance=(busStop.distance * 1000).toString().replace(/\.\d+/, '')
             div.routeInfo
                 a(href='/timings/' + busStop.busStopCode).busStopLink
                     span.busStopRoad=busStop.roadName
