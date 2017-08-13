@@ -56,4 +56,6 @@ div#message span {
     margin-top: calc((100vw + 100vh) * 0.04);
     font-size: calc((100vw + 100vh) * 0.025);
     text-align: center;
+    padding-left: calc((100vw + 100vh) * 0.02);
+    padding-right: calc((100vw + 100vh) * 0.02);
 }
