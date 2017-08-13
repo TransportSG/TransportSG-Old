@@ -1,10 +1,3 @@
-var id = setInterval(() => {
-    if ('on' in window) {
-        clearInterval(id);
-        load();
-    }
-}, 500);
-
 function showError(message) {
     $('div#message span').textContent = message;
     $('#interactionContainer').style.display = 'block';
@@ -41,3 +34,5 @@ var load = () => {
         timeout           : 27000
     });
 }
+
+load();
