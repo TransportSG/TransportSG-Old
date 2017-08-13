@@ -17,7 +17,8 @@ function $(query) {
 }
 
 $.delete = function (query) {
-    $(query).parentElement.removeChild($(query));
+    if ($(query))
+        $(query).parentElement.removeChild($(query));
 }
 
 $.ajax = function (options, callback) {

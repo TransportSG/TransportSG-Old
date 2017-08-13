@@ -27,11 +27,23 @@ var load = () => {
             $('#resultContainer').innerHTML = response;
         });
     }, function error(error) {
-        showError('Failed to get position!');
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                showError('Failed to get positon: Permission denied');
+                break;
+            case error.POSITION_UNAVAILABLE:
+                showError('Failed to get positon: Is your GPS turned on?');
+                break;
+            case error.TIMEOUT:
+                showError('Failed to get positon: Finding your position took too long!');
+                break;
+            default:
+                showError('Failed to get position!');
+        }
     }, {
         enableHighAccuracy: false,
         maximumAge        : 30000,
-        timeout           : 27000
+        timeout           : 10000
     });
 }
 
