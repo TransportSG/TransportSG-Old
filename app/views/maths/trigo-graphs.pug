@@ -21,19 +21,19 @@ block content
         div#controls
             div
                 label(for='amp') a
-                input#amp(type='range' min=-5 max=5 step=0.2)
+                input#amp(type='range' min=-5 max=5 step=0.1 value=1)
                 span#a.val
             div
                 label(for='period') b
-                input#period(type='range' min=-5 max=5 step=0.2)
+                input#period(type='range' min=-5 max=5 step=0.1 value=1)
                 span#b.val
             div
                 label(for='xoff') c
-                input#xoff(type='range' min=-5 max=5 step=0.2)
+                input#xoff(type='range' min=-5 max=5 step=0.1)
                 span#c.val
             div
                 label(for='yoff') d
-                input#yoff(type='range' min=-5 max=5 step=0.2)
+                input#yoff(type='range' min=-5 max=5 step=0.1)
                 span#d.val
     div#canvas-container
         canvas#canvas

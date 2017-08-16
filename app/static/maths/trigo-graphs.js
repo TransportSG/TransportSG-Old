@@ -33,8 +33,8 @@ function paint(context, width, height, a, b, c, d) {
     context.beginPath();
 
     for (var x = -1080; x <= 1080; x += step) {
-        context.moveTo(width / 2 + (x - step) * scaleX, height / 2 - trigoFunction(Math[fName], a, b, c, d, x - step) * scaleY);
-        context.lineTo(width / 2 + x * scaleX, height / 2 - trigoFunction(Math[fName], a, b, c, d, x) * scaleY);
+        context.moveTo(width / 2 + (x - step) * scaleX, height / 2 - trigoFunction(Math[fName], a, b, -c, d, x - step) * scaleY);
+        context.lineTo(width / 2 + x * scaleX, height / 2 - trigoFunction(Math[fName], a, b, -c, d, x) * scaleY);
     }
 
     context.stroke();
