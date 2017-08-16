@@ -23,7 +23,7 @@ function drawBG(context, width, height) {
 
 function paint(context, width, height, a, b, c, d) {
     context.lineWidth = 5;
-    context.strokeStyle = '#555555';
+    context.strokeStyle = '#c5c5c5';
 
     var fName = $('#fName').value;
 
@@ -41,11 +41,10 @@ function paint(context, width, height, a, b, c, d) {
 }
 
 function doPainting(context, width, height) {
-    context.fillStyle = '#EEEEEE';
+    context.fillStyle = '#1e1e1e';
     context.fillRect(0, 0, width, height);
 
     drawBG(context, width, height);
-console.log('paint')
     paint(context, width, height, $('#amp').value * 1, $('#period').value * 1, $('#xoff').value * 1, $('#yoff').value * 1);
 }
 
