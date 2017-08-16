@@ -16,7 +16,9 @@ function connect() {
 			socketOptions: {
 				keepAlive: 1
 			},
-			reconnectTries: Infinity
+			reconnectTries: Infinity,
+            connectTimeoutMS: 180000,
+            socketTimeoutMS: 180000
 		}
 	}, err => {
 		if (err) throw err;
@@ -26,6 +28,7 @@ function connect() {
 var remaining = 0;
 
 var busStopAPI = new BusStopsAPI(new APIKey(config.ltaAPIKey));
+
 busStopAPI.getAllBusStops((err, busStops) => {
     busStops.forEach(busStop => {
         if (busStop.busStopCode.startsWith('N')) {

@@ -1,0 +1,23 @@
+#canvas {
+    width: 100vw;
+    height: 100%;
+}
+
+label, input {
+    padding-right: 10px;
+}
+
+#eq {
+    width: 100vw;
+    text-align: center;
+}
+
+#controls, #function {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+#fName {
+    text-align: center;
+}
