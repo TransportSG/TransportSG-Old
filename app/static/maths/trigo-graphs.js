@@ -64,6 +64,7 @@ function addListeners() {
     $('#period').on('change', load.bind(this, false));
     $('#xoff').on('change', load.bind(this, false));
     $('#yoff').on('change', load.bind(this, false));
+    $('#fName').on('input', load.bind(this, false));
 }
 
 function load(listeners) {
