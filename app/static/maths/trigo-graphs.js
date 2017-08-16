@@ -51,14 +51,9 @@ console.log('paint')
 
 function init() {
     var canvas = $('#canvas');
-    var context = canvas.getContext('2d');
-    var styling = getComputedStyle(canvas);
 
-    var width = styling.width.slice(0, -2) * 1,
-    height = styling.height.slice(0, -2) * 1;
-
-    canvas.width = width;
-    canvas.height = height;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - getComputedStyle($('#others')).height.slice(0, -2) * 1 - getComputedStyle($('#header')).height.slice(0, -2) * 1;
 }
 
 function addListeners() {
@@ -77,8 +72,13 @@ function load(listeners) {
     var context = canvas.getContext('2d');
     var styling = getComputedStyle(canvas);
 
-    var width = styling.width.slice(0, -2) * 1,
-    height = styling.height.slice(0, -2) * 1;
+    $('#a').textContent = $('#amp').value;
+    $('#b').textContent = $('#period').value;
+    $('#c').textContent = $('#xoff').value;
+    $('#d').textContent = $('#yoff').value;
+
+    var width = window.innerWidth;
+    var height = window.innerHeight - getComputedStyle($('#others')).height.slice(0, -2) * 1 - getComputedStyle($('#header')).height.slice(0, -2) * 1;
 
     init();
 

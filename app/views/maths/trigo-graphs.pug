@@ -13,18 +13,27 @@ block header
     span#title Graphs Of Trigonometric Functions
 
 block content
-    div#eq
-        span y = af(bx + c) + d
-    div#function
-        input#fName(value='sin')
-    div#controls
-        label(for='amp') a
-        input#amp(type='range' min=-5 max=5 step=0.2)
-        label(for='period') b
-        input#period(type='range' min=-5 max=5 step=0.2)
-        label(for='xoff') c
-        input#xoff(type='range' min=-5 max=5 step=0.2)
-        label(for='yoff') d
-        input#yoff(type='range' min=-5 max=5 step=0.2)
+    div#others
+        div#eq
+            span y = af(bx + c) + d
+        div#function
+            input#fName(value='sin')
+        div#controls
+            div
+                label(for='amp') a
+                input#amp(type='range' min=-5 max=5 step=0.2)
+                span#a
+            div
+                label(for='period') b
+                input#period(type='range' min=-5 max=5 step=0.2)
+                span#b
+            div
+                label(for='xoff') c
+                input#xoff(type='range' min=-5 max=5 step=0.2)
+                span#c
+            div
+                label(for='yoff') d
+                input#yoff(type='range' min=-5 max=5 step=0.2)
+                span#d
     div#canvas-container
-    canvas#canvas
+        canvas#canvas
