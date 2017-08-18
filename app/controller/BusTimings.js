@@ -39,6 +39,10 @@ function getTerminalForService(busService, givenDestination) {
 			fullService: busService.replace(/[ABWG]/g, '').replace('C', '#')
 		}, (err, service) => {
 			if (err) throw err;
+			if (!service) {
+				resolve('Unknown Destination');
+				return;
+			}
 			var stops = service.stops;
 			var done = false;
 			stops.forEach((direction, i) => {
