@@ -56,7 +56,7 @@ exports.findByLatLong = (req, res) => {
                 }).sort((a, b) => a.svc - b.svc),
                 distance: distance(busStop.position.latitude, busStop.position.longitude, req.body.lat, req.body.long)
             };
-        }).sort((a, b) => a.distance - b.distance);
+        }).sort((a, b) => a.busStopCode - b.busStopCode);
         res.render('bus/stops/nearby-load', {
             busStops: busStops,
             getDistanceCssClass: distance => {
