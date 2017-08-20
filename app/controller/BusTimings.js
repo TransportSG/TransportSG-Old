@@ -39,11 +39,12 @@ function getTerminalForService(busService, givenDestination) {
 			busStopCode: givenDestination
 		}, (err, marker) => {
 			BusService.findOne({
-				fullService: busService.replace(/[WG]/g, '').replace('C', '#')
+				fullService: busService.replace(/[WG]/g, '')
 			}, (err, service) => {
 				marker.busServices.forEach(mark => {
 					if (mark.service === busService) {
 						var direction = mark.direction;
+						console.log(busService)
                         BusStop.findOne({
                             busStopCode: service.interchanges[direction - 1]
                         }, (err, terminal) => {
