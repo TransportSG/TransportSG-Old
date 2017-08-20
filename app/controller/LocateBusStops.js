@@ -50,8 +50,9 @@ exports.findByLatLong = (req, res) => {
                 roadName: busStop.roadName,
                 busStopName: busStop.busStopName,
                 busServices: busStop.busServices.map(service => {
-                    service.operatorCss = cssMap[service.operator];
-                    service.svc = service.serviceNumber.match(/(\d+)/)[0] * 1;
+                    // service.operatorCss = cssMap[service.operator];
+                    service.operatorCss = 'smrt';
+                    service.svc = service.service.match(/(\d+)/)[0] * 1;
                     return service;
                 }).sort((a, b) => a.svc - b.svc),
                 distance: distance(busStop.position.latitude, busStop.position.longitude, req.body.lat, req.body.long)

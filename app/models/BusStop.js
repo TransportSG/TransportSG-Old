@@ -2,7 +2,7 @@ const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var BusStop = new Schema({
-    busStopCode: Number,
+    busStopCode: String,
     busStopName: String,
     position: {
         latitude: Number,
@@ -10,9 +10,23 @@ var BusStop = new Schema({
     },
     roadName: String,
     busServices: [{
-        serviceNumber: String,
-        operator: String
+        service: String,
+        operator: String,
+        busStopDistance: Number,
+        busStopNumber: Number,
+        direction: Number,
+        firstBus: {
+            weekdays: Number,
+            saturday: Number,
+            sunday: Number
+        }, lastBus: {
+            weekdays: Number,
+            saturday: Number,
+            sunday: Number
+        },
+        _id: false
     }]
 });
 
 module.exports = mongoose.model('BusStop', BusStop);
+module.exports.schema = BusStop;

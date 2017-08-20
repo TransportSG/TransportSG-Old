@@ -52,17 +52,15 @@ function listen() {
 
 function connect() {
 	return mongoose.connect('mongodb://' + config.dbUser + ':' + config.dbPass + '@' + config.database + '?authSource=admin', {
-		server: {
-			socketOptions: {
-				keepAlive: 1
-			},
-			reconnectTries: Infinity
-		}
-	}, err => {
-		if (err) throw err;
+        socketTimeoutMS: 180000,
+        keepAlive: true,
+        reconnectTries: Infinity,
+        useMongoClient: true
 	});
 }
 
-connect().connection
-	.on('disconnected', console.error.bind('Disconnected!'));
-listen();
+connect().then(() => {
+	listen();
+}).catch(err => {
+	console.log(err);
+});

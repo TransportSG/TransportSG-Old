@@ -1,15 +1,14 @@
 exports.asyncMap = (array, asyncFunction, mapper, callback) => {
     var promises = [];
     var result = [];
+    var left = array.length;
 
     array.forEach((item, i) => {
-        promises.push(asyncFunction(item, i, array));
+        asyncFunction(item, i, array).then(val => {
+            result.push(mapper(val, array[i]));
+            left--;
+            if (left == 0) callback(result);
+        });
     });
 
-    Promise.all(promises).then(values => {
-        values.forEach((value, i) => {
-            result.push(mapper(value, array[i]));
-        });
-        callback(result);
-    });
 }

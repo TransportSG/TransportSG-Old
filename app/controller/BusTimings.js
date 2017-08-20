@@ -35,26 +35,20 @@ function createOffset(timings, ageMillis) {
 
 function getTerminalForService(busService, givenDestination) {
 	return new Promise(function(resolve, reject) {
-		BusService.findOne({
-			fullService: busService.replace(/[ABWG]/g, '').replace('C', '#')
-		}, (err, service) => {
-			if (err) throw err;
-			if (!service) {
-				resolve('Unknown Destination');
-				return;
-			}
-			var stops = service.stops;
-			var done = false;
-			stops.forEach((direction, i) => {
-				if (done) return;
-				direction.forEach(busStop => {
-					if (done) return;
-					if (busStop.busStopCode == givenDestination) {
-						var serviceDirection = i - 1;
-						var endingBusStop = direction[direction.length - 1];
-						resolve(endingBusStop);
-						done = true;
-						return;
+		BusStop.findOne({
+			busStopCode: givenDestination
+		}, (err, marker) => {
+			BusService.findOne({
+				fullService: busService.replace(/[WG]/g, '').replace('C', '#')
+			}, (err, service) => {
+				marker.busServices.forEach(mark => {
+					if (mark.service === busService) {
+						var direction = mark.direction;
+                        BusStop.findOne({
+                            busStopCode: service.interchanges[direction - 1]
+                        }, (err, terminal) => {
+                            resolve(terminal);
+                        })
 					}
 				});
 			});
@@ -76,9 +70,10 @@ function filterFakeNWAB(timings, operator) {
 
 function respondTimings(res, timings, busStop) {
 	var busStopCode = busStop.busStopCode;
-	util.asyncMap(timings.service,
+	util.asyncMap(timings.service.filter(service => service.buses.length > 0),
 		service => getTerminalForService(service.serviceNumber + service.serviceVariant, service.buses[0].serviceData.end),
 		(busStop, service) => {
+			console.log(service.serviceNumber)
 			return {
 				serviceNumber: service.serviceNumber,
 				serviceVariant: service.serviceVariant,
