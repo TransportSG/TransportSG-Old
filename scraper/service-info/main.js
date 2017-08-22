@@ -43,7 +43,6 @@ var remaining = 0;
 
 function loadBusServiceData(serviceNo) {
     if (serviceNo.startsWith('N') || serviceNo.endsWith('N')) return;
-    console.log(serviceURL + serviceNo.replace(/[#C]/, '%23'))
     request(serviceURL + serviceNo.replace(/[#C]/, '%23'), (err, resp) => {
         if (err) throw err;
         var dom = new JSDOM(resp.body),
@@ -83,6 +82,7 @@ function loadBusServiceData(serviceNo) {
                 }).reduce((a, b, i) => {a[i + 1] = b; return a}, {});;
             })(),
             frequency: (() => {
+                console.log(serviceNo)
                 var lines = document.querySelector('#Content-eservice > article > section > table:nth-child(3) > tbody > tr:nth-child(2)').textContent.split('\n').slice(2, 6);
                 var rawArray = lines.map(timings => {
                     return timings.replace(/\s/g, '').split('s').slice(0, 2);
