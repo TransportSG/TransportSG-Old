@@ -83,7 +83,6 @@ function loadBusServiceData(serviceNo) {
                 }).reduce((a, b, i) => {a[i + 1] = b; return a}, {});;
             })(),
             frequency: (() => {
-                console.log(serviceNo)
                 var lines = document.querySelector('#Content-eservice > article > section > table:nth-child(3) > tbody > tr:nth-child(2)').textContent.split('\n').slice(2, 6);
                 var rawArray = lines.map(timings => {
                     return timings.replace(/\s/g, '').split('s').slice(0, 2);
