@@ -91,7 +91,7 @@ function loadBusServiceData(serviceNo) {
                 var finalTimingsList = rawArray.map(timingSet => timingSet.filter(Boolean).map(timings => {
                     return timings.replace('minute', '').split('-');
                 })).reduce((result, timing) => result.concat(timing), []);
-                var result = [];
+                var result = {};
                 var multiplier = finalTimingsList.length / 4;
 
                 function get(base, i, j) {
@@ -129,9 +129,10 @@ function loadBusServiceData(serviceNo) {
                     return stops.slice(3).filter(stop => !stop.querySelector('.subhead2')).slice(1, -1).map(busStop => {
                         var nodes = busStop.children;
                         return {
-                            distance: nodes[0].textContent * 1,
                             busStopCode: nodes[1].textContent * 1,
                             busStopName: nodes[2].textContent.slice(3)
+                            busStopDistance: nodes[0].textContent * 1,
+
                         };
                     });
                 }).reduce((a, b, i) => {a[i + 1] = b; return a}, {});
@@ -163,7 +164,6 @@ module.exports = () => {
     setInterval(() => {
         console.log(`Waiting for ${remaining} more requests to finish`);
         if (remaining === 0) {
-            mongoose.connection.close();
             process.exit(0);
         }
     }, 10000);

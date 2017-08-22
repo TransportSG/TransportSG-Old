@@ -66,44 +66,12 @@ var BusService = new Schema({
         1: [{
             busStopCode: String,
             busStopName: String,
-            position: {
-                latitude: Number,
-                longitude: Number
-            },
-            roadName: String,
             busStopDistance: Number,
-            busStopNumber: Number,
-            direction: Number,
-            firstBus: {
-                weekdays: Number,
-                saturday: Number,
-                sunday: Number
-            }, lastBus: {
-                weekdays: Number,
-                saturday: Number,
-                sunday: Number
-            },
             _id: false
         }], 2: [{
             busStopCode: String,
             busStopName: String,
-            position: {
-                latitude: Number,
-                longitude: Number
-            },
-            roadName: String,
             busStopDistance: Number,
-            busStopNumber: Number,
-            direction: Number,
-            firstBus: {
-                weekdays: Number,
-                saturday: Number,
-                sunday: Number
-            }, lastBus: {
-                weekdays: Number,
-                saturday: Number,
-                sunday: Number
-            },
             _id: false
         }]
     },
