@@ -43,6 +43,7 @@ var remaining = 0;
 
 function loadBusServiceData(serviceNo) {
     if (serviceNo.startsWith('N') || serviceNo.endsWith('N')) return;
+    console.log(serviceURL + serviceNo.replace(/[#C]/, '%23'))
     request(serviceURL + serviceNo.replace(/[#C]/, '%23'), (err, resp) => {
         if (err) throw err;
         var dom = new JSDOM(resp.body),
