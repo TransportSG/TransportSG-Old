@@ -47,6 +47,7 @@ function loadBusServiceData(serviceNo) {
         if (err) throw err;
         var dom = new JSDOM(resp.body),
         document = dom.window.document;
+        if (!!document.querySelector('.warn')) return;
         var routeHasTwoInt = !!document.querySelector('#Content-eservice > article > section > table:nth-child(1) > tbody > tr:nth-child(4) > td:nth-child(1)');
         var contents = {
             firstBus: (() => {
