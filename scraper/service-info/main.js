@@ -130,7 +130,7 @@ function loadBusServiceData(serviceNo) {
                         var nodes = busStop.children;
                         return {
                             busStopCode: nodes[1].textContent * 1,
-                            busStopName: nodes[2].textContent.slice(3)
+                            busStopName: nodes[2].textContent.slice(3),
                             busStopDistance: nodes[0].textContent * 1,
 
                         };
