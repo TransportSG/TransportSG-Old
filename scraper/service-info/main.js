@@ -100,7 +100,7 @@ function loadBusServiceData(serviceNo) {
                 }
 
                 for (var i = 0; i < multiplier; i++) {
-                    result[i] = {
+                    result[i + 1] = {
                         morning: {
                             min: get(0, i, 0),
                             max: get(0, i, 1)

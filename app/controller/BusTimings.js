@@ -35,21 +35,14 @@ function createOffset(timings, ageMillis) {
 
 function getTerminalForService(busService, givenDestination) {
 	return new Promise(function(resolve, reject) {
-		BusStop.findOne({
-			busStopCode: givenDestination
-		}, (err, marker) => {
-			BusService.findOne({
-				fullService: busService.replace(/[WG]/g, '')
-			}, (err, service) => {
-				marker.busServices.forEach(mark => {
-					if (mark.service === busService) {
-						var direction = mark.direction;
-						console.log(busService)
-                        BusStop.findOne({
-                            busStopCode: service.interchanges[direction - 1]
-                        }, (err, terminal) => {
-                            resolve(terminal);
-                        })
+		BusService.findOne({
+			fullService: busService.replace(/[WG]/g, '')
+		}, (err, service) => {
+			Object.keys(service.stops).slice(0, -1).forEach(d => {
+				var direction = service.stops[d];
+				direction.forEach(busStop => {
+					if (busStop.busStopCode == givenDestination) {
+						resolve(direction[direction.length - 1]);
 					}
 				});
 			});
@@ -74,7 +67,6 @@ function respondTimings(res, timings, busStop) {
 	util.asyncMap(timings.service.filter(service => service.buses.length > 0),
 		service => getTerminalForService(service.serviceNumber + service.serviceVariant, service.buses[0].serviceData.end),
 		(busStop, service) => {
-			console.log(service.serviceNumber)
 			return {
 				serviceNumber: service.serviceNumber,
 				serviceVariant: service.serviceVariant,
@@ -84,7 +76,9 @@ function respondTimings(res, timings, busStop) {
 			};
 		}, services => {
 			res.render('bus/timings/stop', {
-				timings: {services},
+				timings: {
+					services: services.sort((a, b) => a.serviceNumber - b.serviceNumber)
+				},
 				busStopCode: Array(5).fill(0).concat((busStopCode).toString().split('')).slice(-5).join(''),
 				busStopName: busStop.busStopName
 			});
