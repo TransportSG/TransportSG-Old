@@ -49,7 +49,7 @@ function filterOutStopsForSWT(allStops, foundService) {
                 console.log(stop.busStopCode)
                 remainingTerminals.splice(0, 1);
 
-                endingStop = j;
+                endingStop = j + 1;
             }
         })
         return direction.filter((stop, i) => i < endingStop);
