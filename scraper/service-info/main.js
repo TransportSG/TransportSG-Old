@@ -159,9 +159,8 @@ function loadBusServiceData(serviceNo) {
                         });
                     });
                     if (isASWT(serviceNo)) {
-                        var stops = filterOutStopsForSWT(allStops, foundService)
+                        allStops = filterOutStopsForSWT(allStops, foundService)
                         console.log('SWT ' + serviceNo)
-                        return stops;
                     }
                     return allStops.reduce((a, b, i) => {a[i + 1] = b; return a}, {});;
                 })()
