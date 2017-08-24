@@ -46,6 +46,7 @@ function filterOutStopsForSWT(allStops, foundService) {
         direction.forEach((stop, j) => {
             console.log(stop.busStopName);
             if (stop.busStopCode == foundService.interchanges[i] && remainingTerminals[0] == stop.busStopCode) {
+                console.log(stop.busStopCode)
                 remainingTerminals.splice(0, 1);
 
                 endingStop = j;
