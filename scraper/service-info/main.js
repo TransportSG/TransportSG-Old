@@ -149,7 +149,7 @@ function loadBusServiceData(serviceNo) {
                     var stopsList = Array.from(document.querySelectorAll('.eguide-table tbody')).slice(2);
                     var allStops = stopsList.map(stopsList => {
                         var stops = Array.from(stopsList.querySelectorAll('tr'));
-                        return stops.slice(2).filter(stop => !stop.querySelector('.subhead2')).slice(1, -1).map(busStop => {
+                        return stops.slice(1).filter(stop => !stop.querySelector('.subhead2')).slice(1, -1).map(busStop => {
                             var nodes = busStop.children;
                             return {
                                 busStopCode: nodes[1].textContent * 1,
