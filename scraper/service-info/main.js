@@ -53,7 +53,7 @@ function filterOutStopsForSWT(allStops, foundService) {
             }
         })
         return direction.filter((stop, i) => i < endingStop);
-    }).filter(dir => dir.length);
+    }).slice(0, 1);
 
     return allStops;
 }
