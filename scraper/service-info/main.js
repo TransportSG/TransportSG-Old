@@ -39,14 +39,13 @@ var remaining = 0;
 
 function filterOutStopsForSWT(allStops, foundService) {
     var serviceNo = foundService.fullService;
-
+    var endingStop;
+    
     allStops = allStops.map((direction, i) => {
         var remainingTerminals = foundService.interchanges;
 
         direction.forEach((stop, j) => {
-            console.log(stop.busStopName);
             if (stop.busStopCode == foundService.interchanges[i] && remainingTerminals[0] == stop.busStopCode) {
-                console.log(stop.busStopCode)
                 remainingTerminals.splice(0, 1);
 
                 endingStop = j + 1;
@@ -160,7 +159,6 @@ function loadBusServiceData(serviceNo) {
                     });
                     if (isASWT(serviceNo)) {
                         allStops = filterOutStopsForSWT(allStops, foundService)
-                        console.log('SWT ' + serviceNo)
                     }
                     return allStops.reduce((a, b, i) => {a[i + 1] = b; return a}, {});;
                 })()
