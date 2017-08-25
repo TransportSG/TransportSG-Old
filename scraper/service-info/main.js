@@ -40,7 +40,7 @@ var remaining = 0;
 function filterOutStopsForSWT(allStops, foundService) {
     var serviceNo = foundService.fullService;
     var endingStop;
-    
+
     allStops = allStops.map((direction, i) => {
         var remainingTerminals = foundService.interchanges;
 
@@ -151,7 +151,7 @@ function loadBusServiceData(serviceNo) {
                         return stops.slice(1).filter(stop => !stop.querySelector('.subhead2')).slice(1, -1).map(busStop => {
                             var nodes = busStop.children;
                             return {
-                                busStopCode: nodes[1].textContent * 1,
+                                busStopCode: nodes[1].textContent.trim(),
                                 busStopName: nodes[2].textContent.slice(3),
                                 busStopDistance: nodes[0].textContent * 1
                             };

@@ -38,11 +38,20 @@ function getTerminalForService(busService, givenDestination) {
 		BusService.findOne({
 			fullService: busService.replace(/[WG]/g, '')
 		}, (err, service) => {
+			if (service.interchanges.indexOf(givenDestination) !== -1) {
+				BusStop.findOne({
+					busStopCode: service.interchanges[service.interchanges.indexOf(givenDestination)]
+				}, (err, terminus) => {
+					resolve(terminus);
+				})
+				return;
+			}
 			Object.keys(service.stops).slice(0, -1).forEach(d => {
 				var direction = service.stops[d];
-				direction.forEach(busStop => {
+				direction.forEach((busStop, i) => {
 					if (busStop.busStopCode == givenDestination) {
 						resolve(direction[direction.length - 1]);
+						return;
 					}
 				});
 			});

@@ -11,7 +11,7 @@ module.exports = () => {
     busStopsAPI.getAllBusStops((err, busStops) => {
         busStops.forEach(busStop => {
             BusStop.findOne({
-                busStopCode: busStop.busStopCode
+                busStopCode: Array(5).fill('0').concat([...busStop.busStopCode.toString()]).slice(-5).join('')
             }, (err, stop) => {
                 if (!stop) {
                     var data = new BusStop(Object.assign(busStop, {
