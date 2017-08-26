@@ -14,11 +14,12 @@
     position: relative;
     border: calc((100vw + 100vh) * 0.005) solid #505050;
     border-top: calc((100vw + 100vh) * 0.005) solid #A0A0A0;
-    -webkit-animation: spinner 1.1s infinite linear;
     animation: spinner .5s infinite linear;
-    border-radius: 50%;
+    border-radius: 100%;
     width: calc(10vw + 10vh);
     height: calc(10vw + 10vh);
+    margin: 0;
+    padding: 0;
 }
 
 #loadingContainer {
@@ -58,4 +59,10 @@ div#message span {
     text-align: center;
     padding-left: calc((100vw + 100vh) * 0.02);
     padding-right: calc((100vw + 100vh) * 0.02);
+}
+
+p.currentStatus {
+    text-align: center;
+    font-size: calc((100vw + 100vh) * 0.01);
+    margin-top: calc((100vw + 100vh) * 0.005);
 }

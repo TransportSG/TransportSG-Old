@@ -4,6 +4,11 @@ function showError(message) {
     $.delete('#loadingContainer');
 }
 
+function setStatus(status) {
+    if ($('p.currentStatus'))
+        $('p.currentStatus').textContent = status;
+}
+
 var load = () => {
     $('div#message span').textContent = '';
     if (!('geolocation' in navigator)) {
@@ -12,6 +17,7 @@ var load = () => {
     }
     var geolocation = navigator.geolocation;
     geolocation.watchPosition(function success(position) {
+        setStatus('Position Found');
         $.ajax({
             url: '/nearby/latlong',
             method: 'POST',
@@ -20,6 +26,7 @@ var load = () => {
                 long: position.coords.longitude
             }
         }, response => {
+            $('Loaded Bus Stops')
             if ($('#loadingContainer'))
                 $.delete('#loadingContainer');
             if ($('#interactionContainer'))
