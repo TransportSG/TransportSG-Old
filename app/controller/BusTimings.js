@@ -38,6 +38,14 @@ function getTerminalForService(busService, givenDestination) {
 		BusService.findOne({
 			fullService: busService.replace(/[WG]/g, '')
 		}, (err, service) => {
+			if (!sevice) {
+				BusService.findOne({
+					busStopCode: givenDestination
+				}, (err, terminus) => {
+					resolve(terminus)
+				});
+				return;
+			}
 			if (service.interchanges.indexOf(givenDestination) !== -1) {
 				BusStop.findOne({
 					busStopCode: service.interchanges[service.interchanges.indexOf(givenDestination)]
