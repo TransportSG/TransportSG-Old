@@ -38,7 +38,7 @@ function getTerminalForService(busService, givenDestination) {
 		BusService.findOne({
 			fullService: busService.replace(/[WG]/g, '')
 		}, (err, service) => {
-			if (!sevice) {
+			if (!service) {
 				BusService.findOne({
 					busStopCode: givenDestination
 				}, (err, terminus) => {
