@@ -1,4 +1,7 @@
 exports.asyncMap = (array, asyncFunction, mapper, callback) => {
+
+    if (array.length === 0) callback([]);
+
     var promises = [];
     var result = [];
     var left = array.length;

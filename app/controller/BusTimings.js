@@ -81,6 +81,7 @@ function filterFakeNWAB(timings, operator) {
 
 function respondTimings(res, timings, busStop) {
 	var busStopCode = busStop.busStopCode;
+	console.log(timings)
 	util.asyncMap(timings.service.filter(service => service.buses.length > 0),
 		service => getTerminalForService(service.serviceNumber + service.serviceVariant, service.buses[0].serviceData.end),
 		(busStop, service) => {
