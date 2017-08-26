@@ -13,7 +13,7 @@ var load = () => {
     var geolocation = navigator.geolocation;
     geolocation.watchPosition(function success(position) {
         $.ajax({
-            url: '/bus/stops/findByLatLong',
+            url: '/nearby/latlong',
             method: 'POST',
             data: {
                 lat: position.coords.latitude,
