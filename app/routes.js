@@ -9,6 +9,7 @@ module.exports = app => {
 	app.get('/timings/:busStopCode', BusTimings.index);
 
 	app.get('/nearby', LocateBusStops.index);
+	app.get('/bus/stops/nearby', LocateBusStops.index);
 	app.post('/nearby/latlong', LocateBusStops.findByLatLong);
 
 	app.get('/math/trigo-graphs', Math.trigoGraphs);
