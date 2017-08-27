@@ -197,7 +197,6 @@ function loadBusServiceData(serviceNo) {
                         foundBusStop.save(() => {
                             remaining--;
                         });
-
                     });
                 });
             });
