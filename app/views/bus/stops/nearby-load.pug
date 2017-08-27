@@ -1,17 +1,17 @@
 div#busStops
     each busStop in busStops
         div.busStopContainer
-            div(class='distanceMeter ' + getDistanceCssClass(busStop.distance))
-                span.distance=(busStop.distance * 1000).toString().replace(/\.\d+/, '')
-            div.routeInfo
-                a(href='/timings/' + busStop.busStopCode).busStopLink
+            a(href='/timings/' + busStop.busStopCode).busStopLink
+                div(class='distanceMeter ' + getDistanceCssClass(busStop.distance))
+                    span.distance=(busStop.distance * 1000).toString().replace(/\.\d+/, '')
+                div.routeInfo
                     span.busStopRoad=busStop.roadName
                     span.busStopName=busStop.busStopCode + ' ' + busStop.busStopName
-            div.servicePeek
-                div.services
-                    div.col
-                        each service in (busStop.busServices.slice(5, 10))
-                            span(class='busService ' + service.operatorCss)=service.fullService
-                    div.col
-                        each service in (busStop.busServices.slice(0, 5))
-                            span(class='busService ' + service.operatorCss)=service.fullService
+                div.servicePeek
+                    div.services
+                        div.col
+                            each service in (busStop.busServices.slice(5, 10))
+                                span(class='busService ' + service.operatorCss)=service.fullService
+                        div.col
+                            each service in (busStop.busServices.slice(0, 5))
+                                span(class='busService ' + service.operatorCss)=service.fullService

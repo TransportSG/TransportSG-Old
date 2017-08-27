@@ -3,10 +3,13 @@
     height: calc(100vh - (100vw + 100vh) * 0.04);
 }
 
-.busStopContainer {
+.busStopLink {
     display: flex;
     height: calc((100vw + 100vh) * 0.07);
     background-color: #2a2a2a;
+    width: 100vw;
+    text-decoration: none;
+    color: #c5c5c5;
 }
 
 .busStopContainer:nth-child(even) {
@@ -45,14 +48,6 @@
 
 .busStopContainer:nth-child(even) .far {
     background-color: #b43535;
-}
-
-.busStopLink {
-    text-decoration: none;
-    color: #c5c5c5;
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .routeInfo {
@@ -94,6 +89,16 @@
     text-align: center;
     height: calc((100vw + 100vh) * 0.07 / 5);
 }
+
+
+
+
+
+
+
+
+
+
 
 .busStopContainer:nth-child(odd) .col:nth-child(odd) .sbst:nth-child(odd)  {
     background-color: #b845be;
