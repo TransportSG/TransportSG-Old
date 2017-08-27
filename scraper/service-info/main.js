@@ -1,6 +1,7 @@
 const request = require('request'),
     {JSDOM} = require('jsdom'),
-    BusService = require('../../app/models/BusService');
+    BusService = require('../../app/models/BusService'),
+    BusStop = require('../../app/models/BusStop');
 
 var serviceURL = 'https://www.transitlink.com.sg/eservice/eguide/service_route.php?service=';
 
@@ -169,6 +170,13 @@ function loadBusServiceData(serviceNo) {
             BusService.findOneAndUpdate(query, contents, err => {
                 if (err) console.log(err);
                 remaining--;
+            });
+
+            Object.keys(contents.stops).forEach(d => {
+                var direction = contents.stops[d];
+                direction.forEach(busStop => {
+                    console.log(busStop);
+                });
             });
         });
     });
