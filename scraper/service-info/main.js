@@ -175,7 +175,7 @@ function loadBusServiceData(serviceNo) {
             Object.keys(contents.stops).forEach(d => {
                 var direction = contents.stops[d];
                 direction.forEach((busStop, i) => {
-                    if (busStop.busStopName === 'Express') return;
+                    if (busStop.busStopCode === '') return;
                     BusStop.findOne({
                         busStopCode: busStop.busStopCode
                     }, (err, foundBusStop) => {
