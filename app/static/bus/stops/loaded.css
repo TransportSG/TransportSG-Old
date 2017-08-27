@@ -95,69 +95,133 @@
     height: calc((100vw + 100vh) * 0.07 / 5);
 }
 
-.col:nth-child(odd) .sbst:nth-child(odd)  {
+.busStopContainer:nth-child(odd) .col:nth-child(odd) .sbst:nth-child(odd)  {
     background-color: #b845be;
 }
 
-.col:nth-child(odd)  .sbst:nth-child(even) {
+.busStopContainer:nth-child(odd) .col:nth-child(odd)  .sbst:nth-child(even) {
     background-color: #9d3ba2;
 }
 
-.col:nth-child(even) .sbst:nth-child(even) {
+.busStopContainer:nth-child(odd) .col:nth-child(even) .sbst:nth-child(even) {
     background-color: #b845be;
 }
 
-.col:nth-child(even) .sbst:nth-child(odd)  {
+.busStopContainer:nth-child(odd) .col:nth-child(even) .sbst:nth-child(odd)  {
+    background-color: #9d3ba2;
+}
+
+.busStopContainer:nth-child(even) .col:nth-child(odd) .sbst:nth-child(even)  {
+    background-color: #b845be;
+}
+
+.busStopContainer:nth-child(even) .col:nth-child(odd)  .sbst:nth-child(odd) {
+    background-color: #9d3ba2;
+}
+
+.busStopContainer:nth-child(even) .col:nth-child(even) .sbst:nth-child(odd) {
+    background-color: #b845be;
+}
+
+.busStopContainer:nth-child(even) .col:nth-child(even) .sbst:nth-child(even)  {
     background-color: #9d3ba2;
 }
 
 
-.col:nth-child(odd) .smrt:nth-child(odd) {
+.busStopContainer:nth-child(odd) .col:nth-child(odd) .smrt:nth-child(odd) {
     background-color: #c63d3d;
 }
 
-.col:nth-child(odd)  .smrt:nth-child(even) {
+.busStopContainer:nth-child(odd) .col:nth-child(odd)  .smrt:nth-child(even) {
     background-color: #b43535;
 }
 
-.col:nth-child(even) .smrt:nth-child(even) {
+.busStopContainer:nth-child(odd) .col:nth-child(even) .smrt:nth-child(even) {
     background-color: #c63d3d;
 }
 
-.col:nth-child(even) .smrt:nth-child(odd)  {
+.busStopContainer:nth-child(odd) .col:nth-child(even) .smrt:nth-child(odd)  {
+    background-color: #b43535;
+}
+
+.busStopContainer:nth-child(even) .col:nth-child(odd) .smrt:nth-child(even) {
+    background-color: #c63d3d;
+}
+
+.busStopContainer:nth-child(even) .col:nth-child(odd)  .smrt:nth-child(odd) {
+    background-color: #b43535;
+}
+
+.busStopContainer:nth-child(even) .col:nth-child(even) .smrt:nth-child(odd) {
+    background-color: #c63d3d;
+}
+
+.busStopContainer:nth-child(even) .col:nth-child(even) .smrt:nth-child(even)  {
     background-color: #b43535;
 }
 
 
-.col:nth-child(odd) .tts:nth-child(odd) {
+.busStopContainer:nth-child(odd) .col:nth-child(odd) .tts:nth-child(odd) {
     background-color: #4ebe45;
 }
 
-.col:nth-child(odd) .tts:nth-child(even) {
+.busStopContainer:nth-child(odd) .col:nth-child(odd) .tts:nth-child(even) {
     background-color: #43a93b;
 }
 
-.col:nth-child(even) .tts:nth-child(even) {
+.busStopContainer:nth-child(odd) .col:nth-child(even) .tts:nth-child(even) {
     background-color: #4ebe45;
 }
 
-.col:nth-child(even) .tts:nth-child(odd) {
+.busStopContainer:nth-child(odd) .col:nth-child(even) .tts:nth-child(odd) {
+    background-color: #43a93b;
+}
+
+.busStopContainer:nth-child(even) .col:nth-child(odd) .tts:nth-child(even) {
+    background-color: #4ebe45;
+}
+
+.busStopContainer:nth-child(even) .col:nth-child(odd) .tts:nth-child(odd) {
+    background-color: #43a93b;
+}
+
+.busStopContainer:nth-child(even) .col:nth-child(even) .tts:nth-child(odd) {
+    background-color: #4ebe45;
+}
+
+.busStopContainer:nth-child(even) .col:nth-child(even) .tts:nth-child(even) {
     background-color: #43a93b;
 }
 
 
-.col:nth-child(odd) .gas:nth-child(odd) {
+.busStopContainer:nth-child(odd) .col:nth-child(odd) .gas:nth-child(odd) {
     background-color: #d7832c;
 }
 
-.col:nth-child(odd) .gas:nth-child(even) {
+.busStopContainer:nth-child(odd) .col:nth-child(odd) .gas:nth-child(even) {
     background-color: #c47625;
 }
 
-.col:nth-child(even) .gas:nth-child(even) {
+.busStopContainer:nth-child(odd) .col:nth-child(even) .gas:nth-child(even) {
     background-color: #d7832c;
 }
 
-.col:nth-child(even) .gas:nth-child(odd) {
+.busStopContainer:nth-child(odd) .col:nth-child(even) .gas:nth-child(odd) {
+    background-color: #c47625;
+}
+
+.busStopContainer:nth-child(even) .col:nth-child(odd) .gas:nth-child(even) {
+    background-color: #d7832c;
+}
+
+.busStopContainer:nth-child(even) .col:nth-child(odd) .gas:nth-child(odd) {
+    background-color: #c47625;
+}
+
+.busStopContainer:nth-child(even) .col:nth-child(even) .gas:nth-child(odd) {
+    background-color: #d7832c;
+}
+
+.busStopContainer:nth-child(even) .col:nth-child(even) .gas:nth-child(even) {
     background-color: #c47625;
 }
