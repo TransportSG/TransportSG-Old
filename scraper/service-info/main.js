@@ -178,12 +178,12 @@ function loadBusServiceData(serviceNo) {
                     if (busStop.busStopName === 'Express') return;
                     BusStop.findOne({
                         busStopCode: busStop.busStopCode
-                    }, (err, busStop) => {
-                        if (!busStop) {
+                    }, (err, foundBusStop) => {
+                        if (!foundBusStop) {
                             console.log(busStop);
                         }
-                        if (busStop.busServices.filter(e => e.fullService === serviceNo).length) return;
-                        busStop.busServices.push({
+                        if (foundBusStop.busServices.filter(e => e.fullService === serviceNo).length) return;
+                        foundBusStop.busServices.push({
                             serviceNumber: getServiceNumber(serviceNo),
                             variant: getServiceVariant(serviceNo),
                             fullService: serviceNo,
@@ -193,7 +193,7 @@ function loadBusServiceData(serviceNo) {
                             direction: d,
                         });
                         remaining++;
-                        busStop.save(() => {
+                        foundBusStop.save(() => {
                             remaining--;
                         });
                     });
