@@ -58,8 +58,12 @@ function filterOutStopsForSWT(allStops, foundService) {
     return allStops;
 }
 
-function loadBusServiceData(serviceNo) {
-    if (serviceNo.startsWith('N') || serviceNo.endsWith('N')) return;
+function loadBusServiceData(serviceNo, callback) {
+    console.log('Doing ' + serviceNo);
+    if (serviceNo.startsWith('N') || serviceNo.endsWith('N') || serviceNo.startsWith('BPS')) {
+        setTimeout(callback, 1);
+        return;
+    };
     request(serviceURL + serviceNo.replace(/[#C]/, '%23').replace(/[AB]/, ''), (err, resp) => {
         if (err) throw err;
 
@@ -167,10 +171,6 @@ function loadBusServiceData(serviceNo) {
             var service = new BusService(contents);
             remaining++;
 
-            BusService.findOneAndUpdate(query, contents, err => {
-                if (err) console.log(err);
-                remaining--;
-            });
 
             Object.keys(contents.stops).forEach(d => {
                 var direction = contents.stops[d];
@@ -183,15 +183,20 @@ function loadBusServiceData(serviceNo) {
                             console.log(busStop);
                         }
                         if (foundBusStop.busServices.filter(e => e.fullService === serviceNo).length) return;
+
                         foundBusStop.busServices.push({
                             serviceNumber: getServiceNumber(serviceNo),
                             variant: getServiceVariant(serviceNo),
                             fullService: serviceNo,
-                            operator: contents.operator,
+                            operator: foundService.operator,
                             busStopDistance: busStop.busStopDistance,
                             busStopNumber: i + 1,
                             direction: d,
                         });
+
+                        foundBusStop.busServices.sort((a, b) => a.serviceNumber - b.serviceNumber);
+
+                        foundBusStop.markModified('busServices');
 
                         remaining++;
                         foundBusStop.save(() => {
@@ -200,27 +205,46 @@ function loadBusServiceData(serviceNo) {
                     });
                 });
             });
+
+            BusService.findOneAndUpdate(query, contents, err => {
+                if (err) console.log(err);
+                remaining--;
+                setTimeout(callback, 1000);
+            });
         });
     });
 }
 
 module.exports = () => {
-    setInterval(() => {
-        console.log(`Waiting for ${remaining} more requests to finish`);
-        if (remaining === 0) {
-            process.exit(0);
-        }
-    }, 10000);
-
     BusService.find().distinct('fullService', (err, allServices) => {
-        for (let service of allServices) {
-            if (!isASWT(service))
-                loadBusServiceData(service);
-        }
-        for (let service of allServices) {
-            if (isASWT(service)) {
-                loadBusServiceData(service)
+        function nSWT(svc) {return !isASWT(svc);}
+        function iSWT(svc) {return isASWT(svc);}
+
+        var x = [].concat(allServices).sort((a, b) => getServiceNumber(a) - getServiceNumber(b))
+            .filter(serviceNo => !(serviceNo.startsWith('N') || serviceNo.endsWith('N') || serviceNo.startsWith('BPS')));
+        var y = [].concat(y);
+
+        function loopN() {
+            var n = x.splice(0, 1)[0];
+            if (n) {
+                if (nSWT(n))
+                    loadBusServiceData(n, loopN);
+                else
+                    setTimeout(loopN, 1);
             }
         }
+
+        function loopI() {
+            var n = y.splice(0, 1)[0];
+            if (n) {
+                if (iSWT(n))
+                    loadBusServiceData(n, loopI);
+                else
+                    setTimeout(loopI, 1);
+            }
+        }
+
+        loopN();
+        // loopI();
     });
 }

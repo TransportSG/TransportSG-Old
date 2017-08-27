@@ -6,7 +6,7 @@ mongoose.Promise = global.Promise;
 
 function connect() {
 	return mongoose.connect('mongodb://' + config.dbUser + ':' + config.dbPass + '@' + config.database + '?authSource=admin', {
-        socketTimeoutMS: 180000,
+        socketTimeoutMS: 600000,
         keepAlive: true,
         reconnectTries: Infinity,
         useMongoClient: true
