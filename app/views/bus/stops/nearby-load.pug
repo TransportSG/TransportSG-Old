@@ -11,7 +11,7 @@ div#busStops
                 div.services
                     div.col
                         each service in (busStop.busServices.slice(5, 10))
-                            span(class='busService ' + service.operatorCss)=service.serviceNumber
+                            span(class='busService ' + service.operatorCss)=service.fullService
                     div.col
                         each service in (busStop.busServices.slice(0, 5))
-                            span(class='busService ' + service.operatorCss)=service.serviceNumber
+                            span(class='busService ' + service.operatorCss)=service.fullService

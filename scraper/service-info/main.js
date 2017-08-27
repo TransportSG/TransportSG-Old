@@ -209,7 +209,7 @@ function loadBusServiceData(serviceNo, callback) {
             BusService.findOneAndUpdate(query, contents, err => {
                 if (err) console.log(err);
                 remaining--;
-                setTimeout(callback, 1000);
+                setTimeout(callback, 400);
             });
         });
     });
@@ -221,7 +221,7 @@ module.exports = () => {
         function iSWT(svc) {return isASWT(svc);}
 
         var x = [].concat(allServices).sort((a, b) => getServiceNumber(a) - getServiceNumber(b))
-            .filter(serviceNo => !(serviceNo.startsWith('N') || serviceNo.endsWith('N') || serviceNo.startsWith('BPS')));
+            .filter(serviceNo => !(serviceNo.startsWith('N') || serviceNo.endsWith('N') || serviceNo.startsWith('BPS') || serviceNo.startsWith('CT') || serviceNo.endsWith('G') || serviceNo.endsWith('W')));
         var y = [].concat(y);
 
         function loopN() {
