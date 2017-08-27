@@ -60,10 +60,6 @@ function filterOutStopsForSWT(allStops, foundService) {
 
 function loadBusServiceData(serviceNo, callback) {
     console.log('Doing ' + serviceNo);
-    if (serviceNo.startsWith('N') || serviceNo.endsWith('N') || serviceNo.startsWith('BPS')) {
-        setTimeout(callback, 1);
-        return;
-    };
     request(serviceURL + serviceNo.replace(/[#C]/, '%23').replace(/[AB]/, ''), (err, resp) => {
         if (err) throw err;
 
@@ -75,7 +71,10 @@ function loadBusServiceData(serviceNo, callback) {
         BusService.findOne(query, (err, foundService) => {
             var dom = new JSDOM(resp.body),
             document = dom.window.document;
-            if (!!document.querySelector('.warn')) return;
+            if (!!document.querySelector('.warn')) {
+                    setTimeout(callback, 1);
+                    return;
+            }
             var routeHasTwoInt = !!document.querySelector('#Content-eservice > article > section > table:nth-child(1) > tbody > tr:nth-child(4) > td:nth-child(1)');
             var contents = {
                 firstBus: (() => {
@@ -209,7 +208,7 @@ function loadBusServiceData(serviceNo, callback) {
             BusService.findOneAndUpdate(query, contents, err => {
                 if (err) console.log(err);
                 remaining--;
-                setTimeout(callback, 400);
+                setTimeout(callback, 100);
             });
         });
     });
@@ -221,7 +220,8 @@ module.exports = () => {
         function iSWT(svc) {return isASWT(svc);}
 
         var x = [].concat(allServices).sort((a, b) => getServiceNumber(a) - getServiceNumber(b))
-            .filter(serviceNo => !(serviceNo.startsWith('N') || serviceNo.endsWith('N') || serviceNo.startsWith('BPS') || serviceNo.startsWith('CT') || serviceNo.endsWith('G') || serviceNo.endsWith('W')));
+            .filter(serviceNo => !(serviceNo.startsWith('N') || serviceNo.endsWith('N') || serviceNo.startsWith('BPS') ||
+             serviceNo.startsWith('CT') || serviceNo.endsWith('G') || serviceNo.endsWith('W') || serviceNo === '268C'));
         var y = [].concat(y);
 
         function loopN() {
