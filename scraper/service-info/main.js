@@ -179,6 +179,9 @@ function loadBusServiceData(serviceNo) {
                     BusStop.findOne({
                         busStopCode: busStop.busStopCode
                     }, (err, busStop) => {
+                        if (!busStop) {
+                            console.log(busStop);
+                        }
                         if (busStop.busServices.filter(e => e.fullService === serviceNo).length) return;
                         busStop.busServices.push({
                             serviceNumber: getServiceNumber(serviceNo),
