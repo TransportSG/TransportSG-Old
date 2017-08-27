@@ -174,8 +174,26 @@ function loadBusServiceData(serviceNo) {
 
             Object.keys(contents.stops).forEach(d => {
                 var direction = contents.stops[d];
-                direction.forEach(busStop => {
-                    console.log(busStop);
+                direction.forEach((busStop, i) => {
+                    if (busStop.busStopName === 'Express') return;
+                    BusStop.findOne({
+                        busStopCode: busStop.busStopCode
+                    }, (err, busStop) => {
+                        if (busStop.busServices.filter(e => e.fullService === serviceNo).length) return;
+                        busStop.busServices.push({
+                            serviceNumber: getServiceNumber(serviceNo),
+                            variant: getServiceVariant(serviceNo),
+                            fullService: serviceNo,
+                            operator: contents.operator,
+                            busStopDistance: busStop.busStopDistance,
+                            busStopNumber: i + 1,
+                            direction: d,
+                        });
+                        remaining++;
+                        busStop.save(() => {
+                            remaining--;
+                        });
+                    });
                 });
             });
         });

@@ -10,20 +10,13 @@ var BusStop = new Schema({
     },
     roadName: String,
     busServices: [{
-        service: String,
+        serviceNumber: String,
+        variant: String,
+        fullService: String,
         operator: String,
         busStopDistance: Number,
         busStopNumber: Number,
         direction: Number,
-        firstBus: {
-            weekdays: Number,
-            saturday: Number,
-            sunday: Number
-        }, lastBus: {
-            weekdays: Number,
-            saturday: Number,
-            sunday: Number
-        },
         _id: false
     }]
 });
