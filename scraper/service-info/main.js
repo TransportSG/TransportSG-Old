@@ -36,23 +36,6 @@ var operatorMap = {
     'SBS Transit': 'SBS Transit'
 }
 
-var pendingSaves = [];
-var saveItrRunning = false;
-function saveItr() {
-    if (saveItrRunning) return;
-    if (pendingSaves.length !== 0) {
-        saveItrRunning = true;
-        var item = pendingSaves.splice(0, 1)[0];
-        remaining++;
-        item.save(() => {
-            remaining--;
-            saveItr();
-        });
-    } else {
-        saveItrRunning = false;
-    }
-}
-
 var remaining = 0;
 
 function filterOutStopsForSWT(allStops, foundService) {
@@ -209,8 +192,12 @@ function loadBusServiceData(serviceNo) {
                             busStopNumber: i + 1,
                             direction: d,
                         });
-                        pendingSaves.push(foundBusStop);
-                        saveItr();
+
+                        remaining++;
+                        foundBusStop.save(() => {
+                            remaining--;
+                        });
+
                     });
                 });
             });
