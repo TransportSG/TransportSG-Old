@@ -38,7 +38,7 @@ var operatorMap = {
 
 var pendingSaves = [];
 var saveItrRunning = false;
-var saveItr() {
+function saveItr() {
     if (saveItrRunning) return;
     if (pendingSaves.length !== 0) {
         saveItrRunning = true;
