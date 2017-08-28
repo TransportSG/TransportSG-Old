@@ -27,7 +27,8 @@ block content
                             if (+new Date(bus.arrivalTime) - +new Date()) < 0
                                 span Arr
                             else
-                                span=bus.timeToArrival.minutes
+                                span.timeToArrMin=bus.timeToArrival.minutes
+                                span.timeToArrSec=bus.timeToArrival.seconds
                         div.busType
                             span.busType=bus.type
                         div.wabStatus
