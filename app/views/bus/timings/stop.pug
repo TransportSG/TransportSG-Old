@@ -25,7 +25,7 @@ block content
                     div(class='timingContainer bus-load' + bus.load)
                         div.timeToArrival
                             if (+new Date(bus.arrivalTime) - +new Date()) < 0
-                                span Arr
+                                span.timeToArr Arr
                             else
                                 span.timeToArrMin=bus.timeToArrival.minutes
                                 span.timeToArrSec=bus.timeToArrival.seconds
