@@ -11,6 +11,7 @@
     "body-parser": "^1.17.1",
     "compression": "^1.6.2",
     "express": "^4.15.2",
+    "hsts": "^2.1.0",
     "jsdom": "^11.1.0",
     "ltadatamall": "^1.2.13",
     "mongo": "^0.1.0",

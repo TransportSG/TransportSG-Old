@@ -5,6 +5,7 @@ const fs = require('fs'),
     https = require('https'),
     http = require('http'),
     url = require('url'),
+	hsts = require('hsts'),
 	{APIKey} = require('ltadatamall');
 
 mongoose.Promise = global.Promise;
@@ -29,7 +30,7 @@ function createHTTPSServer(app) {
 
 function createRedirectServer(toURL) {
     return http.createServer((req, res) => {
-        res.writeHead(302, {
+        res.writeHead(301, {
             Location: toURL + url.parse(req.url).pathname
         });
         res.end();
@@ -47,7 +48,7 @@ function listen() {
     } else {
         app.listen(port);
     }
-    console.log('TransportSG-BusLookup started on port ' + port);
+    console.log('TransportSG started on port ' + port);
 }
 
 function connect() {
