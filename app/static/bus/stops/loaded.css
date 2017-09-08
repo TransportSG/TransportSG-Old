@@ -23,7 +23,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: calc((100vw + 100vh) * .03);
+    font-size: calc((100vw + 100vh) * .027);
 }
 
 .nearby {

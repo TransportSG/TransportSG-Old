@@ -54,15 +54,23 @@ function getTerminalForService(busService, givenDestination) {
 				})
 				return;
 			}
+			var found = false;
 			Object.keys(service.stops).slice(0, -1).forEach(d => {
 				var direction = service.stops[d];
 				direction.forEach((busStop, i) => {
 					if (busStop.busStopCode == givenDestination) {
 						resolve(direction[direction.length - 1]);
+						found = true;
 						return;
 					}
 				});
 			});
+			if (!found) {
+				resolve({
+					busStopCode: '00000',
+					busStopName: 'Unknown Destination!'
+				})
+			}
 		});
 	});
 }
