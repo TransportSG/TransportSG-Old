@@ -12,7 +12,7 @@
     color: #c5c5c5;
 }
 
-.busStopContainer:nth-child(even) {
+.busStopContainer:nth-child(even) .busStopLink {
     background-color: #202020;
 }
 
