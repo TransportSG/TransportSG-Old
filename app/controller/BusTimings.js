@@ -1,11 +1,20 @@
-const {BusTimingsAPI} = require('ltadatamall'),
+const getTimings = require('./BusTiming-Helper/get-timings')
 	BusStop = require('../models/BusStop'),
 	BusService = require('../models/BusService'),
-	util = require('../util'),
-	CachedMap = require('../CachedMap');
+    asyncMap = require('../util').asyncMap;
 
-const busTimingsAPI = new BusTimingsAPI(global.apiKey),
-	busTimingsCache = new CachedMap(30 * 1000);
+var timingsCache = {},
+cacheCreation = null;
+
+function refreshCache() {
+    getTimings(timings => {
+        timingsCache = timings;
+        cacheCreation = new Date();
+    });
+}
+
+setTimeout(refreshCache, 30 * 1000);
+refreshCache();
 
 var cssMap = {
 	'SBS Transit': 'sbst',
@@ -18,22 +27,41 @@ function isValidBusStopCode(busStopCode) {
 	return !!busStopCode.match(/^\d{5}$/);
 }
 
-function createOffset(timings, ageMillis) {
-	timings.service = timings.service.map(service => {
-		service.buses = service.buses.map(bus => {
-			var diff = new Date(bus.arrivalTime - new Date() - ageMillis);
-			bus.timeToArrival = {
-				minutes: diff.getUTCMinutes(),
-				seconds: diff.getUTCSeconds()
-			}
-			return bus;
-		});
-		return service;
+function correctBuses(timings, operator) {
+	return timings.map(bus => {
+		if (bus.busType === 2 && operator != 'SBS Transit') {
+			bus.isWAB = true;
+		}
+		if (bus.busType === 2 && operator != 'SBS Transit') {
+			bus.isWAB = true;
+		}
+        if (bus.busType === 3 && operator != 'SMRT Buses') {
+            bus.busType = 1;
+            bus.isWAB = true;
+        }
+		return bus;
 	});
-	return timings;
 }
 
-function getTerminalForService(busService, givenDestination) {
+function getServiceNumber(service) {
+    if (service.startsWith('NR')) {
+        return service.replace(/[0-9]/g, '');
+    } else if (service.startsWith('CT')) {
+        return 'CT';
+    } else
+        return service.replace(/[A-Za-z#]/g, '');
+}
+
+function getServiceVariant(service) {
+    if (service.startsWith('NR')) {
+        return service.replace(/[A-Za-z#]/g, '');
+    } else if (service.startsWith('CT')) {
+        return service.replace(/CT/, '');
+    } else
+    return service.replace(/[0-9]/g, '').replace(/#/, 'C');
+}
+
+function getServiceData(busService, givenDestination) {
 	return new Promise(function(resolve, reject) {
 		BusService.findOne({
 			fullService: busService.replace(/[WG]/g, '')
@@ -42,15 +70,28 @@ function getTerminalForService(busService, givenDestination) {
 				BusService.findOne({
 					busStopCode: givenDestination
 				}, (err, terminus) => {
-					resolve(terminus)
+					resolve({
+                        terminal: terminus,
+                        operator: 'unknown'
+                    });
 				});
 				return;
 			}
+
+            function done(terminus) {
+                resolve({
+                    terminal: terminus,
+                    operator: cssMap[service.operator],
+                    serviceNumber: service.serviceNumber,
+                    serviceVariant: service.serviceVariant || ''
+                });
+            }
+
 			if (service.interchanges.indexOf(givenDestination) !== -1) {
 				BusStop.findOne({
 					busStopCode: service.interchanges[service.interchanges.indexOf(givenDestination)]
 				}, (err, terminus) => {
-					resolve(terminus);
+	                done(terminus);
 				})
 				return;
 			}
@@ -59,56 +100,20 @@ function getTerminalForService(busService, givenDestination) {
 				var direction = service.stops[d];
 				direction.forEach((busStop, i) => {
 					if (busStop.busStopCode == givenDestination) {
-						resolve(direction[direction.length - 1]);
+						done(direction[direction.length - 1]);
 						found = true;
 						return;
 					}
 				});
 			});
 			if (!found) {
-				resolve({
-					busStopCode: '00000',
+				done({
+					busStopCode: givenDestination,
 					busStopName: 'Unknown Destination!'
 				})
 			}
 		});
 	});
-}
-
-function filterFakeNWAB(timings, operator) {
-	return timings.map(bus => {
-		if (bus.type === 'DD' && operator != 'SBS Transit') {
-			bus.isWAB = true;
-		}
-		if (bus.type === 'SD' && operator != 'SBS Transit') {
-			bus.isWAB = true;
-		}
-		return bus;
-	});
-}
-
-function respondTimings(res, timings, busStop) {
-	var busStopCode = busStop.busStopCode;
-	util.asyncMap(timings.service.filter(service => service.buses.length > 0),
-		service => getTerminalForService(service.serviceNumber + service.serviceVariant, service.buses[0].serviceData.end),
-		(busStop, service) => {
-			return {
-				serviceNumber: service.serviceNumber,
-				serviceVariant: service.serviceVariant,
-				operatorCssName: cssMap[service.operator],
-				routeDestination: busStop,
-				timings: filterFakeNWAB(service.buses, service.operator)
-			};
-		}, services => {
-			res.render('bus/timings/stop', {
-				timings: {
-					services: services.sort((a, b) => a.serviceNumber - b.serviceNumber)
-				},
-				busStopCode: Array(5).fill(0).concat((busStopCode).toString().split('')).slice(-5).join(''),
-				busStopName: busStop.busStopName
-			});
-		}
-	);
 }
 
 exports.index = (req, res) => {
@@ -124,15 +129,31 @@ exports.index = (req, res) => {
 			res.render('bus/timings/invalid-bus-stop-code');
 			return;
 		}
-		var {value, age} = busTimingsCache.get(busStopCode);
-		if (value) {
-			value = createOffset(value, age);
-			respondTimings(res, value, busStop);
-		} else {
-			busTimingsAPI.getBusTimingsForStop(busStopCode, (err, timings) => {
-				busTimingsCache.put(busStopCode, timings);
-				respondTimings(res, timings, busStop);
-			});
-		}
-	});
-};
+        var timings = timingsCache[busStopCode];
+        var services = Object.keys(timings);
+
+        var promises = [];
+
+        services.forEach(service => {
+            promises.push(getServiceData(service, busStopCode).then(data => {
+                timings[service] = Object.assign(correctBuses(timings[service]), data);
+                return true;
+            }));
+        });
+
+        Promise.all(promises).then(() => {
+            res.render('bus/timings/stop', {
+                timings: timings,
+                timingDiff: (a, b) => {
+                    var diff = new Date(a - b);
+                    return {
+                        minutes: diff.getUTCMinutes(),
+                        seconds: diff.getUTCSeconds(),
+                    }
+                },
+                busStopCode: busStopCode,
+                busStopName: busStop.busStopName
+            });
+        });
+    });
+}

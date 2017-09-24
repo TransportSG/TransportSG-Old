@@ -10,21 +10,22 @@ block header
     img#bus-stop-icon(src='/static/bus/timings/bus-stop.svg')
     span#title=busStopCode + ' ' + busStopName
 block content
-    each service in timings.services
+    each service in timings
         div.service-container
-            div(class=service.operatorCssName + ' service-number-container')
+            div(class=service.operator + ' service-number-container')
                 div.service-number-inner-container
                     span.service-number=service.serviceNumber
                     span.service-variant=service.serviceVariant
             div.miniEDS
                 div.edsText
                     span.towards Towards
-                    a(href='/timings/' + service.routeDestination.busStopCode).destination=service.routeDestination.busStopName
+                    a(href='/timings/' + service.terminal.busStopCode).destination=service.terminal.busStopName
             div.timingsContainer
-                for bus in service.timings
-                    div(class='timingContainer bus-load' + bus.load)
+                for bus in service
+                    -bus.timeToArrival = timingDiff(bus.arrivalTime, new Date())
+                    div(class='timingContainer bus-load' + (bus.load*1 + 1))
                         div.timeToArrival
-                            if (+new Date(bus.arrivalTime) - +new Date()) < 0
+                            if (+new Date() - +new Date(bus.arrivalTime)) < 0
                                 span.timeToArr Arr
                             else
                                 span.timeToArrMin=bus.timeToArrival.minutes
