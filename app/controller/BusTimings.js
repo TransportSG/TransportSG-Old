@@ -130,6 +130,16 @@ exports.index = (req, res) => {
 			return;
 		}
         var timings = timingsCache[busStopCode];
+
+        if (!timings) {
+            res.render('bus/timings/stop', {
+                timings: {},
+                busStopCode: busStopCode,
+                busStopName: busStop.busStopName
+            });
+            return;
+        }
+
         var services = Object.keys(timings);
 
         var promises = [];
