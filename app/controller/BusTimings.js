@@ -13,7 +13,7 @@ function refreshCache() {
     });
 }
 
-setTimeout(refreshCache, 30 * 1000);
+setInterval(refreshCache, 30 * 1000);
 refreshCache();
 
 var cssMap = {
