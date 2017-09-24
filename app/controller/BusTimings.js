@@ -155,7 +155,7 @@ exports.index = (req, res) => {
             res.render('bus/timings/stop', {
                 timings: timings,
                 timingDiff: (a, b) => {
-                    var diff = new Date(a - b);
+                    var diff = new Date(Math.abs(a - b));
                     return {
                         minutes: diff.getUTCMinutes(),
                         seconds: diff.getUTCSeconds(),

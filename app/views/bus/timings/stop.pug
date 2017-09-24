@@ -25,13 +25,14 @@ block content
                     -bus.timeToArrival = timingDiff(bus.arrivalTime, new Date())
                     div(class='timingContainer bus-load' + (bus.load*1 + 1))
                         div.timeToArrival
-                            if (+new Date() - +new Date(bus.arrivalTime)) < 0
+                            if (new Date(bus.arrivalTime - +new Date())) < 0
                                 span.timeToArr Arr
                             else
                                 span.timeToArrMin=bus.timeToArrival.minutes
                                 span.timeToArrSec=bus.timeToArrival.seconds
                         div.busType
-                            span.busType=bus.type
+                            -var busTypes = ['', 'SD', 'DD', 'BD']
+                            span.busType=busTypes[bus.busType]
                         div.wabStatus
                             if bus.isWAB
                                 img(src='/static/bus/timings/wheelchair-bus.svg')
