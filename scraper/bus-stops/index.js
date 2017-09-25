@@ -9,7 +9,8 @@ function connect() {
         socketTimeoutMS: 180000,
         keepAlive: true,
         reconnectTries: Infinity,
-        useMongoClient: true
+        useMongoClient: true,
+        poolSize: 5000
 	});
 }
 

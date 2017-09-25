@@ -10,7 +10,7 @@ module.exports = callback => {
         var timings = {};
 
         function parseDate(timing) {
-            return new Date('20' + c[timing[0]] + ' ' + c[timing[1]] + ' ' + c[timing[2]] + ' ' + (8+c[timing[3]]*1) + ':' + c[timing[4]] + ':' + c[timing[5]] + ' GMT+0800');
+            return new Date('20' + c[timing[0]] + ' ' + c[timing[1]] + ' ' + c[timing[2]] + ' ' + c[timing[3]] + ':' + c[timing[4]] + ':' + c[timing[5]] + ' GMT+0000');
         }
 
         function etaCallback(args) {

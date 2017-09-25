@@ -3,13 +3,11 @@ const getTimings = require('./BusTiming-Helper/get-timings')
 	BusService = require('../models/BusService'),
     asyncMap = require('../util').asyncMap;
 
-var timingsCache = {},
-cacheCreation = null;
+var timingsCache = {};
 
 function refreshCache() {
     getTimings(timings => {
         timingsCache = timings;
-        cacheCreation = new Date();
     });
 }
 

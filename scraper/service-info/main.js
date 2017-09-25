@@ -244,7 +244,7 @@ module.exports = () => {
             }
         }
 
-        loopN();
-        // loopI();
+        // loopN();
+        loopI();
     });
 }
