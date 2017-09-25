@@ -25,7 +25,7 @@ block content
                     -bus.timeToArrival = timingDiff(bus.arrivalTime, new Date())
                     div(class='timingContainer bus-load' + (bus.load*1 + 1))
                         div.timeToArrival
-                            if (new Date(bus.arrivalTime - +new Date())) < 0
+                            if +new Date() - bus.arrivalTime > 0
                                 span.timeToArr Arr
                             else
                                 span.timeToArrMin=bus.timeToArrival.minutes
