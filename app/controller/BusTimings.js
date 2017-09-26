@@ -81,7 +81,7 @@ function getServiceData(busService, givenDestination) {
                     terminal: terminus,
                     operator: cssMap[service.operator],
                     serviceNumber: service.serviceNumber,
-                    serviceVariant: service.serviceVariant || ''
+                    serviceVariant: service.variant || ''
                 });
             }
 
@@ -150,8 +150,11 @@ exports.index = (req, res) => {
         });
 
         Promise.all(promises).then(() => {
+
+
             res.render('bus/timings/stop', {
                 timings: timings,
+				services: services.sort((a, b) => a.match(/(\d+)/)[0] - b.match(/(\d+)/)[0]),
                 timingDiff: (a, b) => {
                     var diff = new Date(Math.abs(a - b));
                     return {

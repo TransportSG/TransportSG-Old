@@ -33,7 +33,7 @@ module.exports = callback => {
                         timing = [...timing];
                         return {
                             arrivalTime: parseDate(timing),
-                            isWAB: !!timing[6],
+                            isWAB: timing[6] === '1',
                             load: timing[7],
                             busType: timing[8]
                         }
