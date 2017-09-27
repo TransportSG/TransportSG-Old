@@ -86,13 +86,21 @@ function getServiceData(busService, givenDestination) {
             }
 
 			if (service.interchanges.indexOf(givenDestination) !== -1) {
+				var index = 0;
+				if (givenDestination == service.interchanges[service.interchanges.indexOf(givenDestination)] &&
+					service.interchanges.length == 2) {
+					index = 1 - service.interchanges.indexOf(givenDestination);
+				} else {
+					index = service.interchanges.indexOf(givenDestination);
+				}
 				BusStop.findOne({
-					busStopCode: service.interchanges[service.interchanges.indexOf(givenDestination)]
+					busStopCode: service.interchanges[index]
 				}, (err, terminus) => {
 	                done(terminus);
 				})
 				return;
 			}
+
 			var found = false;
 			Object.keys(service.stops).slice(0, -1).forEach(d => {
 				var direction = service.stops[d];
