@@ -140,6 +140,7 @@ exports.index = (req, res) => {
         if (!timings) {
             res.render('bus/timings/stop', {
                 timings: {},
+				services: [],
                 busStopCode: busStopCode,
                 busStopName: busStop.busStopName
             });
@@ -158,8 +159,6 @@ exports.index = (req, res) => {
         });
 
         Promise.all(promises).then(() => {
-
-
             res.render('bus/timings/stop', {
                 timings: timings,
 				services: services.sort((a, b) => a.match(/(\d+)/)[0] - b.match(/(\d+)/)[0]),
