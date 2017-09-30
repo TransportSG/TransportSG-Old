@@ -11,6 +11,7 @@ block header
     span#title=busStopCode + ' ' + busStopName
 block content
     each serviceName in services
+        -var service = timings[serviceName];
         div.service-container
             div(class=service.operator + ' service-number-container')
                 div.service-number-inner-container
