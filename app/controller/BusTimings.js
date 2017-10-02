@@ -76,12 +76,13 @@ function getServiceData(busService, givenDestination) {
 				return;
 			}
 
+
             function done(terminus) {
                 resolve({
                     terminal: terminus,
                     operator: cssMap[service.operator],
                     serviceNumber: service.serviceNumber,
-                    serviceVariant: service.variant || ''
+                    serviceVariant: getServiceVariant(busService)
                 });
             }
 
