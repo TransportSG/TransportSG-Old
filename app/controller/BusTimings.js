@@ -64,13 +64,10 @@ function getServiceData(busService, givenDestination) {
 			fullService: busService.replace(/[WG]/g, '')
 		}, (err, service) => {
 			if (!service) {
-				BusService.findOne({
-					busStopCode: givenDestination
-				}, (err, terminus) => {
-					resolve({
-						terminal: terminus,
-						operator: 'unknown'
-					});
+				var parent = busService.replace(/[ABC#]/g, '');
+				getServiceData(parent, givenDestination).then(data => {
+					data.serviceVariant = getServiceVariant(busService);
+					resolve(data);
 				});
 				return;
 			}
@@ -210,6 +207,8 @@ exports.performSearch = (req, res) => {
 		}
 	});
 
+	var svcEncountered = false;
+
 	tokens = tokens.map(token => {
 		var functionName = '';
 		var args = '';
@@ -229,12 +228,16 @@ exports.performSearch = (req, res) => {
 			}
 		});
 
+		if (functionName === 'svc') svcEncountered = true;
+
 		return {
 			functionName, args
 		}
 	});
 
 	var possibleTimings = {};
+
+	if (!svcEncountered) possibleTimings = timingsCache;
 
 	tokens.forEach(token => {
 		if (token.functionName === 'svc') {
@@ -286,6 +289,8 @@ exports.performSearch = (req, res) => {
 		}
 	});
 
+	console.log(possibleTimings)
+
 	var busStops = Object.keys(possibleTimings);
 
 	var promises = [];
@@ -301,6 +306,7 @@ exports.performSearch = (req, res) => {
 	});
 
 	Promise.all(promises).then(() => {
+		console.log(JSON.stringify(possibleTimings,null,2));
 		res.render('bus/timings/timing-search/results.pug', {
 			timingDiff: (a, b) => {
 				var diff = new Date(Math.abs(a - b));
