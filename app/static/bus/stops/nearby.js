@@ -54,4 +54,9 @@ var load = () => {
     });
 }
 
-load();
+var t = setInterval(() => {
+    if ('$' in window) {
+        clearInterval(t);
+        load();
+    }
+});
