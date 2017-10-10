@@ -25,19 +25,21 @@ function isValidBusStopCode(busStopCode) {
 }
 
 function correctBuses(timings, operator) {
-	return timings.map(bus => {
-		if (bus.busType === 2 && operator != 'SBS Transit') {
+	var corrected = timings.map(bus => {
+		if (bus.busType == 2 && operator != 'SBS Transit') {
 			bus.isWAB = true;
 		}
-		if (bus.busType === 2 && operator != 'SBS Transit') {
+		if (bus.busType == 2 && operator != 'SBS Transit') {
 			bus.isWAB = true;
 		}
-		if (bus.busType === 3 && operator != 'SMRT Buses') {
+		if (bus.busType == 3 && operator != 'SMRT Buses') {
 			bus.busType = 1;
 			bus.isWAB = true;
 		}
 		return bus;
 	});
+	
+	return corrected;
 }
 
 function getServiceNumber(service) {
@@ -297,7 +299,7 @@ exports.performSearch = (req, res) => {
 		var services = Object.keys(possibleTimings[busStopCode]);
 		services.forEach(service => {
 			promises.push(getServiceData(service, busStopCode).then(data => {
-				possibleTimings[busStopCode][service] = Object.assign(correctBuses(possibleTimings[busStopCode][service]), data);
+				possibleTimings[busStopCode][service] = Object.assign(possibleTimings[busStopCode][service], data);
 				return true;
 			}));
 		});
