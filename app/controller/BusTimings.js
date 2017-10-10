@@ -1,7 +1,6 @@
 const getTimings = require('./BusTiming-Helper/get-timings')
 	BusStop = require('../models/BusStop'),
-	BusService = require('../models/BusService'),
-    asyncMap = require('../util').asyncMap;
+	BusService = require('../models/BusService');
 
 var timingsCache = {};
 
