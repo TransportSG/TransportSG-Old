@@ -269,7 +269,7 @@ exports.performSearch = (req, res) => {
 		}
 
 		if (token.functionName === 'type') {
-			var typeMap = ['SD', 'BD', 'DD'];
+			var typeMap = ['', 'SD', 'DD', 'BD'];
 			Object.keys(possibleTimings).forEach(busStopCode => {
 				var busStop = possibleTimings[busStopCode];
 				Object.keys(busStop).forEach(serviceNumber => {
