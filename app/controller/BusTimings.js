@@ -267,6 +267,23 @@ exports.performSearch = (req, res) => {
 				if (Object.keys(busStop).length === 0) delete possibleTimings[busStopCode];
 			});
 		}
+
+		if (token.functionName === 'type') {
+			var typeMap = ['SD', 'BD', 'DD'];
+			Object.keys(possibleTimings).forEach(busStopCode => {
+				var busStop = possibleTimings[busStopCode];
+				Object.keys(busStop).forEach(serviceNumber => {
+					var service = busStop[serviceNumber];
+					var validBuses = service.filter(bus => {
+						return typeMap[bus.busType] === token.args
+					});
+					if (validBuses.length > 0)
+						possibleTimings[busStopCode][serviceNumber] = validBuses;
+					else delete possibleTimings[busStopCode][serviceNumber];
+				});
+				if (Object.keys(busStop).length === 0) delete possibleTimings[busStopCode];
+			});
+		}
 	});
 
 	var busStops = Object.keys(possibleTimings);
