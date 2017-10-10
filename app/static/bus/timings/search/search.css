@@ -68,15 +68,3 @@ input[type="checkbox"].hideTimings:checked + .timings {
 input[type="checkbox"].hideTimings:not(checked) + .timings {
     display: none;
 }
-
-.service-container {
-    background: none;
-}
-
-.destination {
-    color: #121212;
-}
-
-.towards {
-    color: #202020;
-}

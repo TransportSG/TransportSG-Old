@@ -289,8 +289,6 @@ exports.performSearch = (req, res) => {
 		}
 	});
 
-	console.log(possibleTimings)
-
 	var busStops = Object.keys(possibleTimings);
 
 	var promises = [];
@@ -306,7 +304,6 @@ exports.performSearch = (req, res) => {
 	});
 
 	Promise.all(promises).then(() => {
-		console.log(JSON.stringify(possibleTimings,null,2));
 		res.render('bus/timings/timing-search/results.pug', {
 			timingDiff: (a, b) => {
 				var diff = new Date(Math.abs(a - b));
