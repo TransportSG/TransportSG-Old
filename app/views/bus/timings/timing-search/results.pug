@@ -1,7 +1,8 @@
 for busStopCode in Object.keys(possibleTimings)
     div.busStop
         label.label(for='busStop-' + busStopCode)
-            span.busStopCode=busStopCode
+            div.busStopContainer
+                span.busStopName=busStops[busStopCode].busStopName
         input.hideTimings(type='checkbox' id='busStop-' + busStopCode)
         div.timings
             each serviceName in Object.keys(possibleTimings[busStopCode])

@@ -18,7 +18,7 @@ function load() {
 
     $('#input').on('input', () => {
         clearTimeout(timer);
-        timer = setTimeout(loadBuses, 1000);
+        timer = setTimeout(loadBuses, 750);
     });
 
 }

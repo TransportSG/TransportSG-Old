@@ -40,13 +40,22 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
     background-color: #AEAEAE;
 }
 
-.busStopCode {
-    font-size: calc((100vw + 100vh) * 0.04);
+.busStopContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.busStopName {
+    font-size: calc((100vw + 100vh) * 0.03);
     color: #121212;
 }
 
 .label {
     padding-bottom: calc((100vw + 100vh) * 0.003);
+    width: 100vw;
+    display: flex;
+    align-items: centre;
+    justify-content: center;
 }
 
 .busStop:nth-child(even) {

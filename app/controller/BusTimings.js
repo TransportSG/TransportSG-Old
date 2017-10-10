@@ -38,7 +38,7 @@ function correctBuses(timings, operator) {
 		}
 		return bus;
 	});
-	
+
 	return corrected;
 }
 
@@ -291,30 +291,41 @@ exports.performSearch = (req, res) => {
 		}
 	});
 
-	var busStops = Object.keys(possibleTimings);
-
+	var busStops = {};
 	var promises = [];
 
-	busStops.forEach(busStopCode => {
+	Object.keys(possibleTimings).forEach(busStopCode => {
 		var services = Object.keys(possibleTimings[busStopCode]);
 		services.forEach(service => {
-			promises.push(getServiceData(service, busStopCode).then(data => {
+			var busServiceData = getServiceData(service, busStopCode).then(data => {
 				possibleTimings[busStopCode][service] = Object.assign(possibleTimings[busStopCode][service], data);
 				return true;
-			}));
+			});
+			var busStopData = new Promise((resolve, reject) => {
+				BusStop.findOne({
+					busStopCode: busStopCode
+				}, (err, busStop) => {
+					busStops[busStopCode] = busStop;
+					resolve();
+				});
+			});
+			promises.push(Promise.all([busStopData, busServiceData]));
 		});
 	});
 
+	var timingDiff = (a, b) => {
+		var diff = new Date(Math.abs(a - b));
+		return {
+			minutes: diff.getUTCMinutes(),
+			seconds: diff.getUTCSeconds(),
+		}
+	};
+
 	Promise.all(promises).then(() => {
 		res.render('bus/timings/timing-search/results.pug', {
-			timingDiff: (a, b) => {
-				var diff = new Date(Math.abs(a - b));
-				return {
-					minutes: diff.getUTCMinutes(),
-					seconds: diff.getUTCSeconds(),
-				}
-			},
-			possibleTimings: possibleTimings
+			busStops,
+			timingDiff,
+			possibleTimings
 		})
 	});
 
