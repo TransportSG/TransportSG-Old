@@ -1,0 +1,82 @@
+#magnifying-glass {
+    width: calc((100vw + 100vh) * 0.02);
+    height: calc((100vw + 100vh) * 0.02);
+    margin-left: calc((100vw + 100vh) * 0.01);
+}
+
+#searchbar {
+    background-color: #0f0f0f;
+    width: 100vw;
+    height: calc((100vw + 100vh) * 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#input {
+    height: calc((100vw + 100vh) * 0.03);
+    width: calc((100vw + 100vh) * 0.5);
+    border: none;
+    border-radius: calc((100vw + 100vh) * 0.01);
+    outline: none;
+    text-align: center;
+    font-size: calc((100vw + 100vh) * 0.023);
+    padding-bottom: calc((100vw + 100vh) * 0.003);
+    background-color: #e0e0e0;
+    appearance: none;
+    -moz-appearance:textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.busStop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #AEAEAE;
+}
+
+.busStopCode {
+    font-size: calc((100vw + 100vh) * 0.04);
+    color: #121212;
+}
+
+.label {
+    padding-bottom: calc((100vw + 100vh) * 0.003);
+}
+
+.busStop:nth-child(even) {
+    background-color: #8A8A8A;
+}
+
+.hideTimings {
+    display: none;
+}
+
+.timings {
+    width: 100vw;
+}
+
+input[type="checkbox"].hideTimings:checked + .timings {
+    display: block;
+}
+
+input[type="checkbox"].hideTimings:not(checked) + .timings {
+    display: none;
+}
+
+.service-container {
+    background: none;
+}
+
+.destination {
+    color: #121212;
+}
+
+.towards {
+    color: #202020;
+}

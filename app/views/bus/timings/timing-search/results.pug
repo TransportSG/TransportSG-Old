@@ -1,0 +1,35 @@
+for busStopCode in Object.keys(possibleTimings)
+    div.busStop
+        label.label(for='busStop-' + busStopCode)
+            span.busStopCode=busStopCode
+        input.hideTimings(type='checkbox' id='busStop-' + busStopCode)
+        div.timings
+            each serviceName in Object.keys(possibleTimings[busStopCode])
+                -var service = possibleTimings[busStopCode][serviceName];
+                div.service-container
+                    div(class=service.operator + ' service-number-container')
+                        div.service-number-inner-container
+                            span.service-number=service.serviceNumber
+                            span.service-variant=service.serviceVariant
+                    div.miniEDS
+                        div.edsText
+                            span.towards Towards
+                            a(href='/timings/' + service.terminal.busStopCode).destination=service.terminal.busStopName
+                    div.timingsContainer
+                        for bus in service
+                            -bus.timeToArrival = timingDiff(bus.arrivalTime, new Date())
+                            div(class='timingContainer bus-load' + (bus.load*1 + 1))
+                                div.timeToArrival
+                                    if +new Date() - bus.arrivalTime > 0
+                                        span.timeToArr Arr
+                                    else
+                                        span.timeToArrMin=bus.timeToArrival.minutes
+                                        span.timeToArrSec=bus.timeToArrival.seconds
+                                div.busType
+                                    -var busTypes = ['', 'SD', 'DD', 'BD']
+                                    span.busType=busTypes[bus.busType]
+                                div.wabStatus
+                                    if bus.isWAB
+                                        img(src='/static/bus/timings/wheelchair-bus.svg')
+                                    else
+                                        img(src='/static/bus/timings/non-wheelchair-bus.svg')

@@ -1,0 +1,20 @@
+extends ../../../layout.pug
+
+block head
+    title Bus Timings Searcher
+
+block css
+    link(rel='stylesheet' href='/static/bus/timings/stop.css')
+    link(rel='stylesheet' href='/static/bus/timings/search/search.css')
+
+block scripts
+  script(src='/static/bus/timings/search/search.js' async)
+
+block header
+    img#magnifying-glass(src='/static/bus/timings/search/magnifying-glass.svg')
+    span#title='Bus Timings Searcher'
+
+block content
+    div#searchbar
+        input#input
+    div#results

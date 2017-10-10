@@ -3,10 +3,13 @@
     src: url(/static/bree-serif.otf);
 }
 
+* {
+    font-family: BreeSerif;
+}
+
 html, body {
     margin: 0;
     padding: 0;
-    font-family: BreeSerif;
     color: #c5c5c5;
     background-color: #1e1e1e;
     max-width: 100%;
