@@ -2,6 +2,8 @@ const getTimings = require('./BusTiming-Helper/get-timings')
 BusStop = require('../models/BusStop'),
 BusService = require('../models/BusService');
 
+const BusDepotData = require('./support.json');
+
 var timingsCache = {};
 
 function refreshCache() {
@@ -230,7 +232,7 @@ exports.performSearch = (req, res) => {
 			}
 		});
 
-		if (functionName === 'svc') svcEncountered = true;
+		if (functionName === 'svc' || functionName === 'depot') svcEncountered = true;
 
 		return {
 			functionName, args
@@ -241,19 +243,30 @@ exports.performSearch = (req, res) => {
 
 	if (!svcEncountered) possibleTimings = timingsCache;
 
+	function filterBySvc(service) {
+		Object.keys(timingsCache).forEach(busStopCode => {
+			if (service in timingsCache[busStopCode]) {
+				if (possibleTimings[busStopCode])
+					possibleTimings[busStopCode][service] = timingsCache[busStopCode][service];
+				else {
+					possibleTimings[busStopCode] = {};
+					possibleTimings[busStopCode][service] = timingsCache[busStopCode][service];
+				}
+			}
+		})
+	}
+
 	tokens.forEach(token => {
 		if (token.functionName === 'svc') {
-			var service = token.args;
-			Object.keys(timingsCache).forEach(busStopCode => {
-				if (service in timingsCache[busStopCode]) {
-					if (possibleTimings[busStopCode])
-						possibleTimings[busStopCode][service] = timingsCache[busStopCode][service];
-					else {
-						possibleTimings[busStopCode] = {};
-						possibleTimings[busStopCode][service] = timingsCache[busStopCode][service];
-					}
-				}
-			})
+			filterBySvc(token.args);
+		}
+
+		if (token.functionName === 'depot') {
+			if (token.args in BusDepotData) {
+				BusDepotData[token.args].forEach(svc => {
+					filterBySvc(svc);
+				});
+			}
 		}
 
 		if (token.functionName === 'nwab') {
