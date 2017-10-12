@@ -241,7 +241,7 @@ exports.performSearch = (req, res) => {
 
 	var possibleTimings = {};
 
-	if (!svcEncountered) possibleTimings = timingsCache;
+	// if (!svcEncountered) possibleTimings = timingsCache;
 
 	function filterBySvc(service) {
 		Object.keys(timingsCache).forEach(busStopCode => {
