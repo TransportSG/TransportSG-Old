@@ -10,6 +10,10 @@ block header
     img#bus-stop-icon(src='/static/bus/timings/bus-stop.svg')
     span#title=busStopCode + ' ' + busStopName
 block content
+    if services.length === 0
+        div.kosongBusStop
+            span No Services Are Serving This Bus Stop Now!
+            div.spacer
     each serviceName in services
         -var service = timings[serviceName];
         div.service-container
