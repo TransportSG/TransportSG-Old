@@ -222,7 +222,8 @@ module.exports = () => {
         var x = [].concat(allServices).sort((a, b) => getServiceNumber(a) - getServiceNumber(b))
             .filter(serviceNo => !(serviceNo.startsWith('N') || serviceNo.endsWith('N') || serviceNo.startsWith('BPS') ||
              serviceNo.startsWith('CT') || serviceNo.endsWith('G') || serviceNo.endsWith('W') || serviceNo === '268C'));
-        var y = [].concat(y);
+        var y = [].concat(allServices).sort((a, b) => getServiceNumber(a) - getServiceNumber(b))
+            .filter(serviceNo => getServiceVariant(serviceNo) !== '' && !(serviceNo.startsWith('N') || serviceNo.endsWith('N')));
 
         function loopN() {
             var n = x.splice(0, 1)[0];
@@ -237,8 +238,9 @@ module.exports = () => {
         function loopI() {
             var n = y.splice(0, 1)[0];
             if (n) {
-                if (iSWT(n))
+                if (iSWT(n)) {
                     loadBusServiceData(n, loopI);
+                }
                 else
                     setTimeout(loopI, 1);
             }

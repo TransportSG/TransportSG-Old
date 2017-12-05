@@ -10,7 +10,7 @@ function connect() {
         keepAlive: true,
         reconnectTries: Infinity,
         useMongoClient: true,
-        poolSize: 5000
+        poolSize: 50000
 	});
 }
 

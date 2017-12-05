@@ -19,11 +19,12 @@ var load = () => {
     geolocation.watchPosition(function success(position) {
         setStatus('Position Found');
         $.ajax({
-            url: '/nearby/latlong',
+            url: '/nearby/nwabs',
             method: 'POST',
             data: {
                 lat: position.coords.latitude,
-                long: position.coords.longitude
+                long: position.coords.longitude,
+                dist: 1
             }
         }, response => {
             $('Loaded Bus Stops')

@@ -1,4 +1,4 @@
-const getTimings = require('./BusTiming-Helper/get-timings')
+const getTimings = require('./BusTiming-Helper/get-timings'),
 BusStop = require('../models/BusStop'),
 BusService = require('../models/BusService');
 
@@ -27,21 +27,12 @@ function isValidBusStopCode(busStopCode) {
 }
 
 function correctBuses(timings, operator) {
-	var corrected = timings.map(bus => {
-		if (bus.busType == 2 && operator != 'SBS Transit') {
-			bus.isWAB = true;
-		}
-		if (bus.busType == 2 && operator != 'SBS Transit') {
-			bus.isWAB = true;
-		}
-		if (bus.busType == 3 && operator != 'SMRT Buses') {
-			bus.busType = 1;
+	return corrected = timings.map(bus => {
+		if (bus.busType <= 2 && operator != 'SBS Transit') {
 			bus.isWAB = true;
 		}
 		return bus;
 	});
-
-	return corrected;
 }
 
 function getServiceNumber(service) {
@@ -62,14 +53,14 @@ function getServiceVariant(service) {
 	return service.replace(/[0-9]/g, '').replace(/#/, 'C');
 }
 
-function getServiceData(busService, givenDestination) {
+exports.getServiceData = (busService, givenDestination, currentStop) => {
 	return new Promise(function(resolve, reject) {
 		BusService.findOne({
 			fullService: busService.replace(/[WG]/g, '')
 		}, (err, service) => {
 			if (!service) {
 				var parent = busService.replace(/[ABC#]/g, '');
-				getServiceData(parent, givenDestination).then(data => {
+				getServiceData(parent, givenDestination, busStopCode).then(data => {
 					data.serviceVariant = getServiceVariant(busService);
 					resolve(data);
 				});
@@ -86,13 +77,12 @@ function getServiceData(busService, givenDestination) {
 				});
 			}
 
-			if (service.interchanges.indexOf(givenDestination) !== -1) {
+			if (service.interchanges.indexOf(currentStop) !== -1) {
 				var index = 0;
-				if (givenDestination == service.interchanges[service.interchanges.indexOf(givenDestination)] &&
-				service.interchanges.length == 2) {
-					index = 1 - service.interchanges.indexOf(givenDestination);
+				if (service.interchanges.length == 2) {
+					index = 1 - service.interchanges.indexOf(currentStop);
 				} else {
-					index = service.interchanges.indexOf(givenDestination);
+					index = service.interchanges.indexOf(currentStop);
 				}
 				BusStop.findOne({
 					busStopCode: service.interchanges[index]
@@ -153,8 +143,8 @@ exports.index = (req, res) => {
 		var promises = [];
 
 		services.forEach(service => {
-			promises.push(getServiceData(service, busStopCode).then(data => {
-				timings[service] = Object.assign(correctBuses(timings[service]), data);
+			promises.push(exports.getServiceData(service, busStopCode, busStopCode).then(data => {
+				timings[service] = Object.assign(correctBuses(timings[service], data.operator), data);
 				return true;
 			}));
 		});
@@ -310,7 +300,7 @@ exports.performSearch = (req, res) => {
 	Object.keys(possibleTimings).forEach(busStopCode => {
 		var services = Object.keys(possibleTimings[busStopCode]);
 		services.forEach(service => {
-			var busServiceData = getServiceData(service, busStopCode).then(data => {
+			var busServiceData = exports.getServiceData(service, busStopCode, busStopCode).then(data => {
 				possibleTimings[busStopCode][service] = Object.assign(possibleTimings[busStopCode][service], data);
 				return true;
 			});
