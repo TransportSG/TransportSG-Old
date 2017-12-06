@@ -46,7 +46,6 @@ var load = () => {
             checkboxes.forEach(checkbox => {
                 checkbox.addEventListener('change', e => {
                     busStopCheckboxes[checkbox.id] = checkbox.checked;
-                    console.log(busStopCheckboxes)
                 });
             });
         });
