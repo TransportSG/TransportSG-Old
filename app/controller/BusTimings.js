@@ -26,9 +26,9 @@ function isValidBusStopCode(busStopCode) {
 	return !!busStopCode.match(/^\d{5}$/);
 }
 
-function correctBuses(timings, operator) {
+function correctBuses(timings, operator, service) {
 	return corrected = timings.map(bus => {
-		if (bus.busType <= 2 && operator != 'SBS Transit') {
+		if (bus.busType <= 2 && operator != 'sbst') {
 			bus.isWAB = true;
 		}
 		return bus;
@@ -144,7 +144,8 @@ exports.index = (req, res) => {
 
 		services.forEach(service => {
 			promises.push(exports.getServiceData(service, busStopCode, busStopCode).then(data => {
-				timings[service] = Object.assign(correctBuses(timings[service], data.operator), data);
+				timings[service] = Object.assign(correctBuses(timings[service], data.operator, service), data);
+					// timings[service] = Object.assign(timings[service], data);
 				return true;
 			}));
 		});

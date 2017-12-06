@@ -17,7 +17,7 @@ refreshCache();
 
 function correctBuses(timings, operator) {
 	return corrected = timings.map(bus => {
-		if (bus.busType <= 2 && operator != 'SBS Transit') {
+		if (bus.busType <= 2 && operator != 'sbst') {
 			bus.isWAB = true;
 		}
 		return bus;
@@ -88,7 +88,6 @@ exports.locate = (req, res) => {
         });
 
         Promise.all(allPromises).then(() => {
-            console.log(processedTimings)
             var busStops = {};
             var promises = [];
 
