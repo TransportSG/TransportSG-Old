@@ -38,14 +38,15 @@ var load = () => {
             $('#resultContainer').innerHTML = response;
 
             Object.keys(busStopCheckboxes).forEach(id => {
-                if ($(id))
-                    $(id).checked = busStopCheckboxes[id];
+                if ($('#' + id))
+                    $('#' + id).checked = busStopCheckboxes[id];
             })
 
             var checkboxes = document.querySelectorAll('.hideTimings');
             checkboxes.forEach(checkbox => {
                 checkbox.addEventListener('change', e => {
                     busStopCheckboxes[checkbox.id] = checkbox.checked;
+                    console.log(busStopCheckboxes)
                 });
             });
         });
