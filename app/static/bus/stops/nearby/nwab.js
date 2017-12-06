@@ -10,6 +10,9 @@ function setStatus(status) {
 }
 
 var load = () => {
+
+    var busStopCheckboxes = {};
+
     $('div#message span').textContent = '';
     if (!('geolocation' in navigator)) {
         showError('Your browser does not support GPS!');
@@ -33,6 +36,18 @@ var load = () => {
             if ($('#interactionContainer'))
                 $.delete('#interactionContainer');
             $('#resultContainer').innerHTML = response;
+
+            Object.keys(busStopCheckboxes).forEach(id => {
+                if ($(id))
+                    $(id).checked = busStopCheckboxes[id];
+            })
+
+            var checkboxes = document.querySelectorAll('.hideTimings');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', e => {
+                    busStopCheckboxes[checkbox.id] = checkbox.checked;
+                });
+            });
         });
     }, function error(error) {
         switch (error.code) {
