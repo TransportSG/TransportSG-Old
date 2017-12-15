@@ -66,7 +66,7 @@ exports.getServiceData = (busService, givenDestination, currentStop) => {
 		}, (err, service) => {
 			if (!service) {
 				var parent = busService.replace(/[ABC#]/g, '');
-				getServiceData(parent, givenDestination, busStopCode).then(data => {
+				exports.getServiceData(parent, givenDestination, busStopCode).then(data => {
 					data.serviceVariant = getServiceVariant(busService);
 					resolve(data);
 				});
