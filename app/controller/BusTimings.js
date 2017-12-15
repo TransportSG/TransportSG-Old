@@ -4,6 +4,8 @@ BusService = require('../models/BusService');
 
 const BusDepotData = require('./support.json');
 
+var TextParser = require('../../SimpleEnglishParser/index');
+
 var timingsCache = {};
 
 function refreshCache() {
@@ -51,6 +53,10 @@ function getServiceVariant(service) {
 		return service.replace(/CT/, '');
 	} else
 	return service.replace(/[0-9]/g, '').replace(/#/, 'C');
+}
+
+function objectType(object) {
+    return Object.prototype.toString.call(object).match(/\[object (\w+)\]/)[1];
 }
 
 exports.getServiceData = (busService, givenDestination, currentStop) => {
@@ -180,123 +186,75 @@ exports.performSearch = (req, res) => {
 		return;
 	}
 
-	var query = req.body.query + ' ';
-
-	var tokens = [];
-	var lastToken = '';
-	var state = 0;
-
-	[...query].forEach((char, i) => {
-		if (char === '(' && state === 0) {
-			state = 1;
+	var parsed = TextParser.parse(req.body.query, {
+        services: {
+            type: Number,
+            canRepeat: true
+        },
+        wheelchair: ['wab', 'nwab'],
+        type: ['SD', 'DD', 'BD'],
+        depots: {
+			type: ['SLBP'],
+			canRepeat: true
 		}
-		if (char === ')' && state === 1) {
-			state = 0;
-		}
-
-		if (char === ' ' && state === 0) {
-			tokens.push(lastToken);
-			lastToken = '';
-		} else {
-			lastToken += char;
-		}
-	});
-
-	var svcEncountered = false;
-
-	tokens = tokens.map(token => {
-		var functionName = '';
-		var args = '';
-
-		var state = 0;
-
-		[...token].forEach((char, i) => {
-			if (char === '(') state = 1;
-
-			if (state === 0) {
-				functionName += char;
-			}
-			if (state === 1) {
-				if (char !== '(' && char !== ')') {
-					args += char;
-				}
-			}
-		});
-
-		if (functionName === 'svc' || functionName === 'depot') svcEncountered = true;
-
-		return {
-			functionName, args
-		}
-	});
+    });
 
 	var possibleTimings = {};
 
-	// if (!svcEncountered) possibleTimings = timingsCache;
+	parsed.services = parsed.services || [];
+	parsed.depots = parsed.depots || [];
 
-	function filterBySvc(service) {
-		Object.keys(timingsCache).forEach(busStopCode => {
-			if (service in timingsCache[busStopCode]) {
-				if (possibleTimings[busStopCode])
-					possibleTimings[busStopCode][service] = timingsCache[busStopCode][service];
-				else {
-					possibleTimings[busStopCode] = {};
-					possibleTimings[busStopCode][service] = timingsCache[busStopCode][service];
-				}
-			}
-		})
+	if (!parsed.services.length && !parsed.depots.length) {
+		res.end('Need to specify at least service or depot!');
+		return;
 	}
 
-	tokens.forEach(token => {
-		if (token.functionName === 'svc') {
-			filterBySvc(token.args);
-		}
+	for (var depot of parsed.depots) {
+		parsed.services = parsed.services.concat(BusDepotData[depot]);
+	}
 
-		if (token.functionName === 'depot') {
-			if (token.args in BusDepotData) {
-				BusDepotData[token.args].forEach(svc => {
-					filterBySvc(svc);
-				});
+	for (var service of parsed.services) {
+		for (var busStopCode of Object.keys(timingsCache)) {
+			var busStop = timingsCache[busStopCode];
+			var busStopServices = Object.keys(busStop);
+
+			if (busStopServices.includes(service.toString())) {
+				if (!possibleTimings[busStopCode]) possibleTimings[busStopCode] = {};
+				possibleTimings[busStopCode][service] = timingsCache[busStopCode][service];
 			}
 		}
+	}
 
-		if (token.functionName === 'nwab') {
-			token.args = Boolean(token.args);
-			Object.keys(possibleTimings).forEach(busStopCode => {
-				var busStop = possibleTimings[busStopCode];
-				Object.keys(busStop).forEach(serviceNumber => {
-					var service = busStop[serviceNumber];
-					var validBuses = service.filter(bus => {
-						return bus.isWAB !== token.args;
-					});
-					if (validBuses.length > 0)
-						possibleTimings[busStopCode][serviceNumber] = validBuses;
-					else delete possibleTimings[busStopCode][serviceNumber];
-				});
-				if (Object.keys(busStop).length === 0) delete possibleTimings[busStopCode];
-			});
+	function filter(filter) {
+		for (var busStopCode of Object.keys(possibleTimings)) {
+			var busStop = possibleTimings[busStopCode];
+			for (var service of Object.keys(busStop)) {
+				var filtered = busStop[service].filter(filter);
+				possibleTimings[busStopCode][service] = filtered;
+
+				if (filtered.length === 0) {
+					delete possibleTimings[busStopCode][service];
+				}
+			}
+			if (Object.keys(possibleTimings[busStopCode]).length === 0) {
+				delete possibleTimings[busStopCode];
+			}
 		}
+	}
 
-		if (token.functionName === 'type') {
-			var typeMap = ['', 'SD', 'DD', 'BD'];
-			Object.keys(possibleTimings).forEach(busStopCode => {
-				var busStop = possibleTimings[busStopCode];
-				Object.keys(busStop).forEach(serviceNumber => {
-					var service = busStop[serviceNumber];
-					var validBuses = service.filter(bus => {
-						return typeMap[bus.busType] === token.args
-					});
-					if (validBuses.length > 0)
-						possibleTimings[busStopCode][serviceNumber] = validBuses;
-					else delete possibleTimings[busStopCode][serviceNumber];
-				});
-				if (Object.keys(busStop).length === 0) delete possibleTimings[busStopCode];
-			});
-		}
-	});
+	if (objectType(parsed.wheelchair) === 'String') {
+		var wabFilterType = parsed.wheelchair === 'wab';
+		filter(bus => bus.isWAB == wabFilterType);
+	}
 
-	var busStops = {};
+	if (objectType(parsed.type) === 'String') {
+		var busTypeMapping = ['', 'SD', 'DD', 'BD'];
+
+		filter(bus => busTypeMapping[bus.busType] === parsed.type);
+	}
+
 	var promises = [];
+	var busStops = {};
 
 	Object.keys(possibleTimings).forEach(busStopCode => {
 		var services = Object.keys(possibleTimings[busStopCode]);

@@ -83,15 +83,18 @@ module.exports = () => {
 
                 console.log(busStop)
 
+                function done() {
+                    remainingRequests--;
+                    if (remainingRequests == 0) process.exit();
+                }
+
                 if (!stop) {
                     var data = new BusStop(busStopData);
 
-                    data.save(() => {
-                        remainingRequests--;
-                    });
+                    data.save(done);
                 } else {
                     stop.set(busStopData);
-                    stop.save(() => remainingRequests--);
+                    stop.save(done);
                 }
             });
         });
@@ -102,8 +105,6 @@ module.exports = () => {
         BusStop.findOne({
             busStopCode: busStopCode
         }, (err, busStop) => {
-            console.log(busStopData);
-
             busStop.set(busStopData);
             busStop.save();
         });
