@@ -25,8 +25,10 @@ var load = () => {
             url: '/nearby/nwabs',
             method: 'POST',
             data: {
-                lat: position.coords.latitude,
-                long: position.coords.longitude,
+                "lat" : 1.31491572870629,
+                "long" : 103.76412225438476,
+                // lat: position.coords.latitude,
+                // long: position.coords.longitude,
                 dist: 1
             }
         }, response => {

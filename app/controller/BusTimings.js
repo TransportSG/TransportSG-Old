@@ -65,10 +65,11 @@ exports.getServiceData = (busService, givenDestination, currentStop) => {
 			fullService: busService.replace(/[WG]/g, '')
 		}, (err, service) => {
 			if (!service) {
-				var parent = busService.replace(/[ABC#]/g, '');
-				exports.getServiceData(parent, givenDestination, busStopCode).then(data => {
-					data.serviceVariant = getServiceVariant(busService);
-					resolve(data);
+				resolve({
+					terminal: currentStop,
+					operator: cssMap['SMRT Buses'],
+					serviceNumber: getServiceNumber(busService),
+					serviceVariant: getServiceVariant(busService)
 				});
 				return;
 			}
