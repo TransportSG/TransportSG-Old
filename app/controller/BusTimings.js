@@ -189,7 +189,7 @@ exports.performSearch = (req, res) => {
 
 	var parsed = TextParser.parse(req.body.query, {
         services: {
-            type: /(\d+[GWABC#M]?)/,
+            type: /(!?\d+[GWABC#M]?)/,
             canRepeat: true
         },
         wheelchair: ['wab', 'nwab'],
@@ -212,6 +212,12 @@ exports.performSearch = (req, res) => {
 
 	for (var depot of parsed.depots) {
 		parsed.services = parsed.services.concat(BusDepotData[depot]);
+	}
+
+	for (var service of parsed.services.filter(svc => svc.startsWith('!'))) {
+		console.log('removing ' + service.substring(1))
+		parsed.services.splice(parsed.services.indexOf(service.substring(1)), 1);
+		parsed.services.splice(parsed.services.indexOf(service), 1);
 	}
 
 	for (var service of parsed.services) {
