@@ -31,6 +31,10 @@ module.exports = {
                     }
                 }
 
+                if (objectType(rule) === 'RegExp' && rule.test(token)) {
+                    addResult(ruleName, canRepeat, token);
+                    break;
+                }
                 if (objectType(rule) === 'Array') {
                     var succeded = false;
                     for (var allowedValue of rule) {
@@ -41,10 +45,12 @@ module.exports = {
                         }
                     }
                     if (succeded) break;
-                } else if (objectType(rule) === 'Function' && objectType(rule(token)) === rule.name && !Number.isNaN(rule(token))) {
+                }
+                if (objectType(rule) === 'Function' && objectType(rule(token)) === rule.name && !Number.isNaN(rule(token))) {
                     addResult(ruleName, canRepeat, rule(token));
                     break;
-                } else if (objectType(rule) === 'Function') {
+                }
+                if (objectType(rule) === 'Function') {
                     if (Boolean(rule(token))) {
                         addResult(ruleName, canRepeat, token);
                         break;

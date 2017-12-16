@@ -189,13 +189,13 @@ exports.performSearch = (req, res) => {
 
 	var parsed = TextParser.parse(req.body.query, {
         services: {
-            type: Number,
+            type: /(\d+[GWABC#M]?)/,
             canRepeat: true
         },
         wheelchair: ['wab', 'nwab'],
         type: ['SD', 'DD', 'BD'],
         depots: {
-			type: ['SLBP', 'ARBP', 'BBDEP', 'HGDEP', 'AMDEP'],
+			type: ['SLBP', 'ARBP', 'BBDEP', 'HGDEP', 'BNDEP', 'AMDEP', 'KJDEP', 'WLDEP'],
 			canRepeat: true
 		}
     });
