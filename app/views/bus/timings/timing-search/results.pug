@@ -1,3 +1,6 @@
+-var serviceSummary = Object.keys(possibleTimings).map(busStopCode => Object.keys(possibleTimings[busStopCode])).reduce((a, b) => a.concat(b), []).filter((e, i, a) => a.indexOf(e) === i)
+div
+    span='Service Summary: ' + serviceSummary.join(', ')
 for busStopCode in Object.keys(possibleTimings)
     div.busStop
         label.label(for='busStop-' + busStopCode)
@@ -15,7 +18,6 @@ for busStopCode in Object.keys(possibleTimings)
                     div.miniEDS
                         div.edsText
                             span.towards Towards
-                            -console.log(service)
                             a(href='/timings/' + service.terminal.busStopCode).destination=service.terminal.busStopName
                     div.timingsContainer
                         for bus in service
