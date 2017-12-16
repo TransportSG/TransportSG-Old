@@ -29,7 +29,7 @@ var load = () => {
                 "long" : 103.76412225438476,
                 // lat: position.coords.latitude,
                 // long: position.coords.longitude,
-                dist: 40
+                dist: 10
             }
         }, response => {
             $('Loaded Bus Stops')

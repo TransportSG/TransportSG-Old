@@ -15,6 +15,7 @@ for busStopCode in Object.keys(possibleTimings)
                     div.miniEDS
                         div.edsText
                             span.towards Towards
+                            -console.log(service)
                             a(href='/timings/' + service.terminal.busStopCode).destination=service.terminal.busStopName
                     div.timingsContainer
                         for bus in service
