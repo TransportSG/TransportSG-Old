@@ -36,7 +36,7 @@ exports.locate = (req, res) => {
         return;
     }
 
-    BusStopsLocator.locateBusStops(req.body.lat, req.body.long, 0.09333809512 * req.body.dist, busStops => {
+    BusStopsLocator.locateBusStops(req.body.lat, req.body.long, 0.0066 * req.body.dist, busStops => {
         var finalTimings = {};
         busStops.forEach(busStop => {
             var busStopCode = busStop.busStopCode;
