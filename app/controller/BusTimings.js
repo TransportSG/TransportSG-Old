@@ -195,7 +195,7 @@ exports.performSearch = (req, res) => {
         wheelchair: ['wab', 'nwab'],
         type: ['SD', 'DD', 'BD'],
         depots: {
-			type: ['SLBP'],
+			type: ['SLBP', 'ARBP', 'BBDEP', 'HGDEP', 'AMDEP'],
 			canRepeat: true
 		}
     });
